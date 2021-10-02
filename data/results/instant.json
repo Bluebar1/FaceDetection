@@ -1,0 +1,29 @@
+[
+  {
+    "img": "data/images/input/test4.jpg",
+    "resultSaveLoc": "data/images/output/instant_result.jpg",
+    "algorithm": "mtcnn",
+    "dateTime": "10/01/2021, 17:16:29",
+    "runTime": 55.0,
+    "confidence": 0.99952,
+    "isSuccess": true
+  },
+  {
+    "img": "data/images/input/test1.jpg",
+    "resultSaveLoc": "data/images/output/instant_result.jpg",
+    "algorithm": "mtcnn",
+    "dateTime": "10/01/2021, 17:16:54",
+    "runTime": 206.0,
+    "confidence": 0.99701,
+    "isSuccess": true
+  },
+  {
+    "img": "data/images/input/test1.jpg",
+    "resultSaveLoc": "data/images/output/instant_result.jpg",
+    "algorithm": "mtcnn",
+    "dateTime": "10/01/2021, 20:01:59",
+    "runTime": 189.0,
+    "confidence": 0.99701,
+    "isSuccess": true
+  }
+]

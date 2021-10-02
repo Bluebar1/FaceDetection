@@ -1,9 +1,8 @@
 import cv2
 import sys
-# from modes import runInstant
-# from modes import runLive
-# from modes import runOffline
-from modes import *
+from modes.instant import runInstant
+from modes.live import runLive 
+from modes.offline import runOffline
 
 
 if len(sys.argv) < 2:

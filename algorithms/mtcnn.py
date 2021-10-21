@@ -34,6 +34,7 @@ def getResult(location) :
 # draws detected face boxes on image
 # if other algorithms use a similar method, move to utils
 def drawFaces(img_data, results) :
+    print(type(img_data))
     im = cv2.imdecode(np.frombuffer(img_data, np.uint8), cv2.IMREAD_COLOR)
     image = cv2.cvtColor(im, cv2.COLOR_BGR2RGB)
     
@@ -48,5 +49,4 @@ def drawFaces(img_data, results) :
     image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
     is_success, im_buf_arr = cv2.imencode(".jpg", image) # TODO: Add support for other extentions (.png)
     return im_buf_arr
-
 

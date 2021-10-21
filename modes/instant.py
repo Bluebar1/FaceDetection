@@ -6,7 +6,7 @@ Arguments:
     Name of algorithm
 """
 
-import cv2
+# import cv2
 import config
 import utils
 from PIL import Image
@@ -39,7 +39,8 @@ def runInstant(args):
     # Change image to string of location because json cannot encode image objects
     result.set_img(f'{location}')
     # append result to JSON file
-    utils.appendJSON(f'{config.instantDataLocation}',result)
+    
+    utils.appendJSON(config.instantDataLocation, result)
     # Open image in new window
     im = Image.open(config.instantImageOutput)
     im.show()

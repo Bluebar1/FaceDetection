@@ -11,6 +11,7 @@ def currentTime() :
 def dateTime() :
     return datetime.now().strftime(r"%m/%d/%Y, %H:%M:%S")
 
+
 def appendJSON(filePath, jsonData) :
     with open(filePath, 'r') as file:
         data = json.load(file)
@@ -22,3 +23,4 @@ def appendJSON(filePath, jsonData) :
     # write to file
     with open(filePath, 'w') as file:
         json.dump(data, file)
+

@@ -1,0 +1,47 @@
+[
+  {
+    "img": "test1.jpg",
+    "resultSaveLoc": "data/images/output/offline",
+    "algorithm": "mtcnn",
+    "dateTime": "10/21/2021, 14:39:19",
+    "runTime": 152.0,
+    "confidence": 1.0,
+    "isSuccess": true
+  },
+  {
+    "img": "test2.jpg",
+    "resultSaveLoc": "data/images/output/offline",
+    "algorithm": "mtcnn",
+    "dateTime": "10/21/2021, 14:39:20",
+    "runTime": 788.0,
+    "confidence": 1.0,
+    "isSuccess": true
+  },
+  {
+    "img": "test3.jpg",
+    "resultSaveLoc": "data/images/output/offline",
+    "algorithm": "mtcnn",
+    "dateTime": "10/21/2021, 14:39:21",
+    "runTime": 1023.0,
+    "confidence": 1.0,
+    "isSuccess": true
+  },
+  {
+    "img": "test4.jpg",
+    "resultSaveLoc": "data/images/output/offline",
+    "algorithm": "mtcnn",
+    "dateTime": "10/21/2021, 14:39:21",
+    "runTime": 104.0,
+    "confidence": 0.99965,
+    "isSuccess": true
+  },
+  {
+    "img": "test5.jpg",
+    "resultSaveLoc": "data/images/output/offline",
+    "algorithm": "mtcnn",
+    "dateTime": "10/21/2021, 14:39:21",
+    "runTime": 114.0,
+    "confidence": 0.99999,
+    "isSuccess": true
+  }
+]

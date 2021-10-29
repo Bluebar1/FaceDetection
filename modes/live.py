@@ -12,8 +12,7 @@ import numpy as np
 import config
 
 
-def runLive(args) :
-    
+def liveMTCNN() :
     detector = MTCNN()
     cap = cv2.VideoCapture()
     cap.open(0, cv2.CAP_DSHOW)
@@ -38,5 +37,42 @@ def runLive(args) :
 
     cap.release()
     cv2.destroyAllWindows()
+
+def liveHaar() :
+    
+    face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + "haarcascade_frontalface_default.xml")
+    cap = cv2.VideoCapture()
+    cap.open(0, cv2.CAP_DSHOW)
+
+    while(True) :
+        ret, frame = cap.read()
+
+        frame = cv2.resize(frame, (600, 400))
+        faces = face_cascade.detectMultiScale(frame)
+
+        for (x,y,w,h) in faces:
+            frame = cv2.rectangle(frame, (x, y), (x + w, y + h),
+                (0, 255, 0), 2)
+
+        cv2.imshow('frame', frame)
+        if cv2.waitKey(1) & 0xFF == ord('q'):
+            break
+
+    cap.release()
+    cv2.destroyAllWindows()
+
+def liveRetina() :
+    print('retina is currently too slow to support live mode')
+
+def runLive(args) :
+    algorithm = args[2]
+    if algorithm == 'mtcnn' :
+        liveMTCNN()
+    elif algorithm == 'haar' :
+        liveHaar()
+    elif algorithm == 'retina' :
+        liveRetina()
+    
+    
     
 

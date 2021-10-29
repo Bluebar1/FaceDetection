@@ -12,17 +12,27 @@ import config
 import utils
 import os
 from algorithms import mtcnn
+from algorithms import haar_cascade
+from algorithms import retina
 
 def runOffline(args):
-    print('runOffline')
+    print('Running Offline Mode')
+    print('...')
     folder = config.inputPath
-    algorithm = 'mtcnn'
+    algorithm = args[2]
 
     delPreviousResults()
 
     for filename in os.listdir(folder) :
         tic = utils.currentTime()
-        result = mtcnn.getResult(folder + '/' + filename)
+        
+        if algorithm == 'mtcnn' :
+            result = mtcnn.getResult(folder + '/' + filename)
+        elif algorithm == 'haar' :
+            result = haar_cascade.getResult(folder + '/' + filename)
+        elif algorithm == 'retina' :
+            result = retina.getResult(folder + '/' + filename)
+            
         toc = utils.currentTime()
         result.set_resultSaveLoc(config.offlineOutputPath)
         result.set_algorithm(algorithm)
@@ -35,6 +45,9 @@ def runOffline(args):
 
         result.set_img(f'{filename}')
         utils.appendJSON(config.offlineDataLocation, result)
+
+    print('Marked images saved to ' + config.offlineOutputPath)
+    print('JSON test results data saved to ' + config.offlineDataLocation)
 
 def delPreviousResults() :
     f = open(config.offlineDataLocation, 'w+')

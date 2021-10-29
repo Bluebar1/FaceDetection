@@ -1,1 +1,90 @@
-[{"img": "data/images/input/test4.jpg", "resultSaveLoc": "data/images/output/instant_result.jpg", "algorithm": "mtcnn", "dateTime": "10/01/2021, 17:16:29", "runTime": 55.0, "confidence": 0.99952, "isSuccess": true}, {"img": "data/images/input/test1.jpg", "resultSaveLoc": "data/images/output/instant_result.jpg", "algorithm": "mtcnn", "dateTime": "10/01/2021, 17:16:54", "runTime": 206.0, "confidence": 0.99701, "isSuccess": true}, {"img": "data/images/input/test1.jpg", "resultSaveLoc": "data/images/output/instant_result.jpg", "algorithm": "mtcnn", "dateTime": "10/01/2021, 20:01:59", "runTime": 189.0, "confidence": 0.99701, "isSuccess": true}, {"img": "data/images/input/test1.jpg", "resultSaveLoc": "data/images/output/instant_result.jpg", "algorithm": "mtcnn", "dateTime": "10/04/2021, 09:36:08", "runTime": 231.0, "confidence": 0.99701, "isSuccess": true}, {"img": "data/images/input/test1.jpg", "resultSaveLoc": "data/images/output/instant_result.jpg", "algorithm": "mtcnn", "dateTime": "10/04/2021, 10:43:44", "runTime": 176.0, "confidence": 0.99701, "isSuccess": true}, {"img": "data/images/input/test1.jpg", "resultSaveLoc": "data/images/output/instant_result.jpg", "algorithm": "mtcnn", "dateTime": "10/04/2021, 10:47:09", "runTime": 180.0, "confidence": 0.99701, "isSuccess": true}, {"img": "data/images/input/test2.jpg", "resultSaveLoc": "data/images/output/instant_result.jpg", "algorithm": "mtcnn", "dateTime": "10/21/2021, 10:59:47", "runTime": 108.0, "confidence": 0.9931, "isSuccess": true}, {"img": "data/images/input/test2.jpg", "resultSaveLoc": "data/images/output/instant_result.jpg", "algorithm": "mtcnn", "dateTime": "10/21/2021, 11:00:52", "runTime": 37.0, "confidence": 0.9931, "isSuccess": true}, {"img": "data/images/input/test2.jpg", "resultSaveLoc": "data/images/output/instant_result.jpg", "algorithm": "mtcnn", "dateTime": "10/21/2021, 11:02:21", "runTime": 38.0, "confidence": 0.9931, "isSuccess": true}, {"img": "data/images/input/test1.jpg", "resultSaveLoc": "data/images/output/instant_result.jpg", "algorithm": "mtcnn", "dateTime": "10/21/2021, 11:02:46", "runTime": 201.0, "confidence": 0.99701, "isSuccess": true}, {"img": "data/images/input/test1.jpg", "resultSaveLoc": "data/images/output/instant_result.jpg", "algorithm": "mtcnn", "dateTime": "10/21/2021, 14:41:03", "runTime": 148.0, "confidence": 1.0, "isSuccess": true}]
+[
+  {
+    "img": "data/images/input/test1.jpg",
+    "resultSaveLoc": "data/images/output/instant_result.jpg",
+    "algorithm": "mtcnn",
+    "dateTime": "10/28/2021, 11:32:27",
+    "runTime": 133.0,
+    "isSuccess": true,
+    "faces": [
+      [533, 35, 139, 173],
+      [454, 113, 90, 113],
+      [33, 103, 105, 133],
+      [265, 51, 65, 81],
+      [150, 7, 73, 95],
+      [370, 71, 58, 87]
+    ],
+    "confidence": [
+      0.9999963045120239,
+      0.9999741315841675,
+      0.9999641180038452,
+      0.9999223947525024,
+      0.9999125003814697,
+      0.9996563196182251
+    ]
+  },
+  {
+    "img": "data/images/input/test1.jpg",
+    "resultSaveLoc": "data/images/output/instant_result.jpg",
+    "algorithm": "haar",
+    "dateTime": "10/28/2021, 11:32:52",
+    "runTime": 302.0,
+    "isSuccess": "na",
+    "faces": [
+      [357, 75, 83, 83],
+      [26, 110, 130, 130],
+      [430, 114, 110, 110],
+      [527, 40, 153, 153],
+      [144, 8, 100, 100]
+    ],
+    "confidence": "na"
+  },
+  {
+    "img": "data/images/input/test1.jpg",
+    "resultSaveLoc": "data/images/output/instant_result.jpg",
+    "algorithm": "retina",
+    "dateTime": "10/28/2021, 11:33:20",
+    "runTime": 3778.0,
+    "isSuccess": "na",
+    "faces": [
+      [32, 110, 110, 123],
+      [265, 57, 66, 76],
+      [146, 5, 76, 102],
+      [366, 68, 63, 95],
+      [452, 112, 90, 119],
+      [528, 32, 141, 174]
+    ],
+    "confidence": [
+      0.9995777010917664,
+      0.9994673132896423,
+      0.9994532465934753,
+      0.9989492297172546,
+      0.9988478422164917,
+      0.9972794651985168
+    ]
+  },
+  {
+    "img": "data/images/input/test1.jpg",
+    "resultSaveLoc": "data/images/output/instant_result.jpg",
+    "algorithm": "retina",
+    "dateTime": "10/28/2021, 11:37:46",
+    "runTime": 3548.0,
+    "isSuccess": "na",
+    "faces": [
+      [32, 110, 110, 123],
+      [265, 57, 66, 76],
+      [146, 5, 76, 102],
+      [366, 68, 63, 95],
+      [452, 112, 90, 119],
+      [528, 32, 141, 174]
+    ],
+    "confidence": [
+      0.9995777010917664,
+      0.9994673132896423,
+      0.9994532465934753,
+      0.9989492297172546,
+      0.9988478422164917,
+      0.9972794651985168
+    ]
+  }
+]

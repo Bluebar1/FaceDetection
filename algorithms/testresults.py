@@ -18,10 +18,11 @@ class TestResults:
         self.algorithm = ""
         self.dateTime = ""
         self.runTime = float
-        self.confidence = float
         self.isSuccess = bool
-
-    
+        self.faces = []
+        self.confidence = []
+        
+        
     def toJSON(self) :
         # Encodes to JSON string using dictionary
         return json.dumps(self, default=lambda o: o.__dict__) 
@@ -50,6 +51,9 @@ class TestResults:
     def get_isSuccess(self) :
         return self.isSuccess
 
+    def get_faces(self) :
+        return self.faces
+
 
     # Setters 
 
@@ -74,5 +78,7 @@ class TestResults:
     def set_isSuccess(self, isSuccess) :
         self.isSuccess = isSuccess
 
+    def set_faces(self, faces) :
+        self.faces = faces
 
     

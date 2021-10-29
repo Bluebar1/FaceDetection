@@ -11,8 +11,11 @@ import config
 import utils
 from PIL import Image
 from algorithms import mtcnn
+from algorithms import haar_cascade
+from algorithms import retina
 
 def runInstant(args):
+    print('run instant called')
     location = f"{config.inputPath}/{args[2]}"
     algorithm = args[3]
     # start timer
@@ -20,6 +23,12 @@ def runInstant(args):
 
     if algorithm == 'mtcnn' :
         result = mtcnn.getResult(location)
+    elif algorithm == 'haar' :
+        result = haar_cascade.getResult(location)
+    elif algorithm == 'retina' :
+        result = retina.getResult(location)
+        
+        
     else :
         print('Algorithm not supported')
         quit()
@@ -42,5 +51,6 @@ def runInstant(args):
     
     utils.appendJSON(config.instantDataLocation, result)
     # Open image in new window
+    print('opening image')
     im = Image.open(config.instantImageOutput)
     im.show()

@@ -13,6 +13,7 @@ import config
 
 
 def liveMTCNN() :
+    print('Running live. Press Q to quit')
     detector = MTCNN()
     cap = cv2.VideoCapture()
     cap.open(0, cv2.CAP_DSHOW)
@@ -39,7 +40,7 @@ def liveMTCNN() :
     cv2.destroyAllWindows()
 
 def liveHaar() :
-    
+    print('Running live. Click on video window and press Q to quit')
     face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + "haarcascade_frontalface_default.xml")
     cap = cv2.VideoCapture()
     cap.open(0, cv2.CAP_DSHOW)
@@ -65,7 +66,7 @@ def liveRetina() :
     print('retina is currently too slow to support live mode')
 
 def runLive(args) :
-    algorithm = args[2]
+    algorithm = args[0]
     if algorithm == 'mtcnn' :
         liveMTCNN()
     elif algorithm == 'haar' :

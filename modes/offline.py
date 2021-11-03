@@ -11,6 +11,7 @@ Arguments:
 import config
 import utils
 import os
+from tqdm import tqdm
 from algorithms import mtcnn
 from algorithms import haar_cascade
 from algorithms import retina
@@ -18,25 +19,33 @@ from algorithms import retina
 def runOffline(args):
     print('Running Offline Mode')
     print('...')
-    folder = config.inputPath
-    algorithm = args[2]
+    algorithm = args[0]
+    dataset = args[1]
+    limit = int(args[2])
+    path = config.inputPath + '/' + dataset
 
     delPreviousResults()
 
     facesDetected = 0
     confidence = 0
     totalRuntime = 0
-    totalImages = len(os.listdir(folder))
+    
+    # Gets list paths to images in selected dataset
+    images = os.listdir(path)
+    
+    # Shrink list to limit arg
+    if limit != 0 : del images[limit:]
 
-    for filename in os.listdir(folder) :
+    
+    for filename in tqdm(images) :
         tic = utils.currentTime()
         
         if algorithm == 'mtcnn' :
-            result = mtcnn.getResult(folder + '/' + filename)
+            result = mtcnn.getResult(path + '/' + filename)
         elif algorithm == 'haar' :
-            result = haar_cascade.getResult(folder + '/' + filename)
+            result = haar_cascade.getResult(path + '/' + filename)
         elif algorithm == 'retina' :
-            result = retina.getResult(folder + '/' + filename)
+            result = retina.getResult(path + '/' + filename)
             
         toc = utils.currentTime()
         result.set_resultSaveLoc(config.offlineOutputPath)
@@ -51,22 +60,19 @@ def runOffline(args):
 
             for conf in result.get_confidence() :
                 confidence += conf
-                # facesDetected += 1
-
-        
-
-
-
 
         # Save new image file
+        tic = utils.currentTime()
         with open(config.offlineOutputPath + '/' + filename, "wb") as fp:
             fp.write(result.get_img())
 
         result.set_img(f'{filename}')
         utils.appendJSON(config.offlineDataLocation, result)
 
+        
     
-
+    
+    totalImages = len(images)
     avgConfidence = round(confidence / facesDetected, 5)
     avgFaces = (facesDetected / totalImages)
     avgRuntime = (totalRuntime / totalImages)
@@ -74,14 +80,15 @@ def runOffline(args):
     if algorithm == 'haar' :
         avgConfidence = 'na'
 
+
+    # Writing test result in latex format to txt file
     f = open(config.offlineLatexLocation, 'w+')
-    # latexString = algorithm + '&' + totalRuntime + '&' + avgRuntime + '&' + 
     table = [algorithm, str(totalRuntime), str(avgRuntime), str(facesDetected), str(avgFaces), str(avgConfidence)]
     tempStr = ''
     for data in table :
         tempStr += data + '&'
-        print(tempStr)
 
+    # Trim last '&' and append double-backslash
     tempStr = tempStr[:-1] + r' \\'
     f.write(tempStr)
     

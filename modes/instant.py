@@ -15,9 +15,12 @@ from algorithms import haar_cascade
 from algorithms import retina
 
 def runInstant(args):
-    print('run instant called')
-    location = f"{config.inputPath}/{args[2]}"
-    algorithm = args[3]
+    
+    algorithm = args[0]
+    location = f'{config.inputPath}/{args[1]}'
+
+    print(f'Running instant mode \n Algorithm: {algorithm} \n File: {location} \n ...')
+    
     # start timer
     tic = utils.currentTime()
 
@@ -51,6 +54,8 @@ def runInstant(args):
     
     utils.appendJSON(config.instantDataLocation, result)
     # Open image in new window
-    print('opening image')
+    print(f'JSON result appended to {config.instantDataLocation}')
+    print(f'Marked images saved to {config.instantImageOutput}')
+    print('Opening image...')
     im = Image.open(config.instantImageOutput)
     im.show()

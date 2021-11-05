@@ -29,15 +29,9 @@ def appendJSON(filePath, jsonData) :
 
 
 
-def drawFaces(img_data, faces, testResult) :
-    im = cv2.imdecode(np.frombuffer(img_data, np.uint8), cv2.IMREAD_COLOR)
-    image = cv2.cvtColor(im, cv2.COLOR_BGR2RGB)
-    
+def drawFaces(img_data, faces) :
     for (x,y,w,h) in faces:
-        image = cv2.rectangle(image, (x, y), (x + w, y + h),
+        img_data = cv2.rectangle(img_data, (x, y), (x + w, y + h),
             (0, 255, 0), 2)
 
-    image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
-    is_success, im_buf_arr = cv2.imencode(".jpg", image) # TODO: Add support for other extentions (.png)
-    testResult.set_faces(faces)
-    return im_buf_arr
+    return img_data

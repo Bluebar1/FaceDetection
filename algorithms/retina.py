@@ -4,13 +4,17 @@ import cv2
 import config
 import numpy as np
 import utils
+import os
+import tensorflow as tf
 
 
-def getResult(location) :
+def getResult(location, model=None) :
     result = TestResults()
-    img = cv2.cvtColor(cv2.imread(location), cv2.COLOR_BGR2RGB)
     
-    resp = RetinaFace.detect_faces(location)
+    if model is None :
+        model = RetinaFace.build_model()
+    
+    resp = RetinaFace.detect_faces(location, model=model)
 
     faces = []
     confidences = []
@@ -26,10 +30,10 @@ def getResult(location) :
         
     result.set_confidence(confidences)
     result.set_isSuccess('na')
-    with open(location, "rb") as fp:
-        marked_img = utils.drawFaces(fp.read(), faces, result)
-        result.set_img(marked_img) 
+    result.set_faces(faces)
 
+    marked_img = utils.drawFaces(cv2.imread(location), faces)
+    result.set_img(marked_img)
     return result
 
 

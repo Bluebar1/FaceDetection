@@ -11,7 +11,13 @@ Arguments:
 import config
 import utils
 import os
+import cv2
+
 from tqdm import tqdm
+from mtcnn_cv2 import MTCNN
+from retinaface import RetinaFace
+
+
 from algorithms import mtcnn
 from algorithms import haar_cascade
 from algorithms import retina
@@ -36,16 +42,23 @@ def runOffline(args):
     # Shrink list to limit arg
     if limit != 0 : del images[limit:]
 
-    
+    if algorithm == 'mtcnn' :
+        det = MTCNN()
+    elif algorithm == 'haar' :
+        det = cv2.CascadeClassifier(cv2.data.haarcascades + "haarcascade_frontalface_default.xml")
+        
+    elif algorithm == 'retina' :
+        model = RetinaFace.build_model()
+
     for filename in tqdm(images) :
         tic = utils.currentTime()
         
         if algorithm == 'mtcnn' :
-            result = mtcnn.getResult(path + '/' + filename)
+            result = mtcnn.getResult(path + '/' + filename, det)
         elif algorithm == 'haar' :
-            result = haar_cascade.getResult(path + '/' + filename)
+            result = haar_cascade.getResult(path + '/' + filename, det)
         elif algorithm == 'retina' :
-            result = retina.getResult(path + '/' + filename)
+            result = retina.getResult(path + '/' + filename, model)
             
         toc = utils.currentTime()
         result.set_resultSaveLoc(config.offlineOutputPath)

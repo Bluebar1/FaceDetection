@@ -9,6 +9,7 @@ Arguments:
 # import cv2
 import config
 import utils
+import cv2
 from PIL import Image
 from algorithms import mtcnn
 from algorithms import haar_cascade
@@ -45,8 +46,10 @@ def runInstant(args):
     result.set_runTime(round(toc-tic, 0))
 
     # Save new image file
-    with open(config.instantImageOutput, "wb") as fp:
-        fp.write(result.get_img())
+    # with open(config.instantImageOutput, "wb") as fp:
+    #     fp.write(result.get_img())
+    print('WRITTING IMAGE')
+    cv2.imwrite(config.instantImageOutput, result.get_img())
 
     # Change image to string of location because json cannot encode image objects
     result.set_img(f'{location}')
@@ -59,3 +62,4 @@ def runInstant(args):
     print('Opening image...')
     im = Image.open(config.instantImageOutput)
     im.show()
+

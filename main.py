@@ -12,6 +12,7 @@ Passes args to given mode
 """
 args = []
 
+
 mode = input('What mode would you like to use? Options: instant|live|offline \n : ')
 
 if mode == 'instant':

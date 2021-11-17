@@ -19,7 +19,11 @@ class Test(MDApp):
         runInstant(args)
     
     def select_image(self, file) :
-        self.instantImagePath = file[0]
+        try: 
+            # self.instantImagePath = file[0]
+            self.root.ids.my_image.source = file[0] # Try clause since if they click on a directory or any non-image, it won't error out
+        except:
+            pass
 
     def build(self):
         self.title = "Face Detection Algorithms"

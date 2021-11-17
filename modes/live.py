@@ -95,7 +95,7 @@ def liveRetina() :
 
 
 def runLive(args) :
-    algorithm = args[0]
+    algorithm = args
     if algorithm == 'mtcnn' :
         liveMTCNN()
     elif algorithm == 'haar' :

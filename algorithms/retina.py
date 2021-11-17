@@ -19,7 +19,10 @@ def getResult(location, model=None) :
     faces = []
     confidences = []
     for face in resp :
+        if not face :
+            continue
         confidences.append(resp[face]['score'])
+        
         single_face = []
         for num in resp[face]['facial_area'] :
             single_face.append(num.item())
@@ -28,9 +31,11 @@ def getResult(location, model=None) :
         single_face[3] = single_face[3] - single_face[1]
         faces.append(single_face)
         
-    result.set_confidence(confidences)
-    result.set_isSuccess('na')
-    result.set_faces(faces)
+    result.setAny(
+        confidence = confidences,
+        isSuccess = 'na',
+        faces = faces
+    )
 
     marked_img = utils.drawFaces(cv2.imread(location), faces)
     result.set_img(marked_img)

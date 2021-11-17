@@ -28,7 +28,23 @@ def runOffline(args):
     algorithm = args[0]
     dataset = args[1]
     limit = int(args[2])
+
+    
+    
     path = config.inputPath + '/' + dataset
+    markPath = config.markingsLoc + dataset + '_markings.json'
+
+    isTrained = False
+    if args[3] == 'y' :
+        isTrained = True
+        data = utils.loadJSON(markPath)
+        i = 0
+
+
+    # if os.path.isfile(markPath) :
+    #     data = utils.loadJSON(markPath)
+    # else :
+    #     data = []
 
     delPreviousResults()
 
@@ -61,10 +77,22 @@ def runOffline(args):
             result = retina.getResult(path + '/' + filename, model)
             
         toc = utils.currentTime()
-        result.set_resultSaveLoc(config.offlineOutputPath)
-        result.set_algorithm(algorithm)
-        result.set_dateTime(utils.dateTime())
-        result.set_runTime(round(toc-tic, 0))
+
+        if isTrained :
+            marks = data[i]
+            i+=1
+            isSuccess = runTest(result, marks)
+        else : 
+            isSuccess = 'na'
+
+        result.setAny(
+            resultSaveLoc=config.offlineOutputPath,
+            algorithm=algorithm,
+            dateTime=utils.dateTime(),
+            runTime=round(toc-tic, 0),
+            isSuccess=isSuccess
+        )
+        
 
         facesDetected += len(result.get_faces())
         totalRuntime += result.get_runTime()
@@ -76,8 +104,7 @@ def runOffline(args):
 
         # Save new image file
         tic = utils.currentTime()
-        with open(config.offlineOutputPath + '/' + filename, "wb") as fp:
-            fp.write(result.get_img())
+        cv2.imwrite(config.offlineOutputPath + '/' + filename, result.get_img())
 
         result.set_img(f'{filename}')
         utils.appendJSON(config.offlineDataLocation, result)
@@ -118,8 +145,44 @@ def delPreviousResults() :
     for filename in os.listdir(config.offlineOutputPath) :
         os.remove(config.offlineOutputPath + '/' + filename)
 
+
+def runTest(result, data) :
+
+
+    faces = result.get_faces()
+    img = result.get_img()
+
+    successCount = 0
+    dataLength = len(data)
+
+    
+    for (px, py) in data :
+        found = False
+        for (x,y,w,h) in faces :
+            x1, y1 = x , y
+            x2, y2 = x1+w, y1+h
+            if (x1 < px and px < x2):
+                if (y1 < py and py < y2):
+                    found = True
+                    successCount+=1
+            
+        if not found :
+            result.set_img(cv2.rectangle(img, (px-100, py-100), (px+100, py+100),
+                    (0, 0, 255), 2))
+            
+    
+    result.setAny(
+        accuracy=successCount / len(data),
+        falseDetections=len(faces) - successCount
+    )
+    
+
+    if successCount == len(data) :
+        return True
+    else :
+        return False
+
     
 
 
 
-    

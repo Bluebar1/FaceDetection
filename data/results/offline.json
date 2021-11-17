@@ -1,1 +1,113 @@
-[{"img": "test1.jpg", "resultSaveLoc": "data/images/output/offline", "algorithm": "haar", "dateTime": "11/02/2021, 12:56:28", "runTime": 699.0, "isSuccess": "na", "faces": [[357, 75, 83, 83], [26, 110, 130, 130], [430, 114, 110, 110], [527, 40, 153, 153], [144, 8, 100, 100]], "confidence": "na"}, {"img": "test2.jpg", "resultSaveLoc": "data/images/output/offline", "algorithm": "haar", "dateTime": "11/02/2021, 12:56:29", "runTime": 433.0, "isSuccess": "na", "faces": [[289, 149, 168, 168], [207, 136, 211, 211], [1280, 209, 142, 142], [369, 772, 38, 38], [1004, 295, 53, 53], [797, 885, 83, 83], [1447, 376, 154, 154], [1290, 325, 122, 122], [567, 280, 132, 132], [694, 350, 158, 158], [1800, 357, 158, 158], [150, 387, 174, 174], [905, 428, 170, 170], [344, 311, 248, 248], [444, 445, 161, 161], [1647, 483, 187, 187], [1284, 473, 152, 152], [974, 235, 53, 53], [643, 534, 59, 59], [1169, 546, 56, 56]], "confidence": "na"}, {"img": "test3.jpg", "resultSaveLoc": "data/images/output/offline", "algorithm": "haar", "dateTime": "11/02/2021, 12:56:29", "runTime": 644.0, "isSuccess": "na", "faces": [[1128, 262, 331, 331], [955, 583, 256, 256], [1655, 376, 296, 296], [107, 667, 323, 323], [473, 422, 279, 279], [158, 469, 263, 263], [280, 282, 60, 60], [1487, 1605, 106, 106], [326, 102, 57, 57], [1233, 1574, 73, 73], [223, 1368, 104, 104], [31, 1517, 90, 90], [1713, 1498, 187, 187], [88, 1042, 54, 54]], "confidence": "na"}, {"img": "test4.jpg", "resultSaveLoc": "data/images/output/offline", "algorithm": "haar", "dateTime": "11/02/2021, 12:56:30", "runTime": 95.0, "isSuccess": "na", "faces": [[338, 156, 276, 276]], "confidence": "na"}, {"img": "test5.jpg", "resultSaveLoc": "data/images/output/offline", "algorithm": "haar", "dateTime": "11/02/2021, 12:56:30", "runTime": 83.0, "isSuccess": "na", "faces": [[359, 130, 255, 255], [87, 158, 245, 245], [664, 169, 229, 229]], "confidence": "na"}]
+[
+  {
+    "img": "test1.jpg",
+    "resultSaveLoc": "data/images/output/offline",
+    "algorithm": "haar",
+    "dateTime": "11/08/2021, 11:58:18",
+    "runTime": 511.0,
+    "isSuccess": false,
+    "accuracy": 0.8333333333333334,
+    "falseDetections": 0,
+    "faces": [
+      [356, 76, 83, 83],
+      [26, 110, 130, 130],
+      [144, 8, 100, 100],
+      [527, 40, 154, 154],
+      [432, 118, 110, 110]
+    ],
+    "confidence": "na"
+  },
+  {
+    "img": "test2.jpg",
+    "resultSaveLoc": "data/images/output/offline",
+    "algorithm": "haar",
+    "dateTime": "11/08/2021, 11:58:18",
+    "runTime": 309.0,
+    "isSuccess": false,
+    "accuracy": 1.2307692307692308,
+    "falseDetections": 10,
+    "faces": [
+      [289, 149, 168, 168],
+      [210, 135, 210, 210],
+      [370, 774, 34, 34],
+      [1277, 208, 146, 146],
+      [948, 210, 159, 159],
+      [1004, 295, 53, 53],
+      [1580, 211, 192, 192],
+      [974, 234, 55, 55],
+      [567, 280, 133, 133],
+      [696, 351, 157, 157],
+      [1290, 326, 121, 121],
+      [1800, 358, 159, 159],
+      [147, 385, 177, 177],
+      [1445, 376, 153, 153],
+      [342, 307, 256, 256],
+      [908, 428, 169, 169],
+      [472, 586, 105, 105],
+      [1284, 473, 150, 150],
+      [445, 445, 161, 161],
+      [867, 756, 215, 215],
+      [1645, 484, 189, 189],
+      [370, 784, 38, 38],
+      [644, 535, 57, 57],
+      [1170, 546, 55, 55],
+      [792, 880, 85, 85],
+      [909, 951, 25, 25]
+    ],
+    "confidence": "na"
+  },
+  {
+    "img": "test3.jpg",
+    "resultSaveLoc": "data/images/output/offline",
+    "algorithm": "haar",
+    "dateTime": "11/08/2021, 11:58:19",
+    "runTime": 475.0,
+    "isSuccess": false,
+    "accuracy": 0.7142857142857143,
+    "falseDetections": 8,
+    "faces": [
+      [333, 105, 50, 50],
+      [1682, 852, 58, 58],
+      [1129, 264, 329, 329],
+      [1650, 371, 306, 306],
+      [1235, 1573, 74, 74],
+      [954, 582, 258, 258],
+      [102, 669, 321, 321],
+      [467, 420, 286, 286],
+      [154, 466, 269, 269],
+      [224, 1368, 101, 101],
+      [104, 1374, 115, 115],
+      [2246, 886, 43, 43],
+      [1482, 1598, 116, 116]
+    ],
+    "confidence": "na"
+  },
+  {
+    "img": "test4.jpg",
+    "resultSaveLoc": "data/images/output/offline",
+    "algorithm": "haar",
+    "dateTime": "11/08/2021, 11:58:19",
+    "runTime": 44.0,
+    "isSuccess": true,
+    "accuracy": 1.0,
+    "falseDetections": 0,
+    "faces": [[336, 154, 278, 278]],
+    "confidence": "na"
+  },
+  {
+    "img": "test5.jpg",
+    "resultSaveLoc": "data/images/output/offline",
+    "algorithm": "haar",
+    "dateTime": "11/08/2021, 11:58:19",
+    "runTime": 38.0,
+    "isSuccess": true,
+    "accuracy": 1.0,
+    "falseDetections": 0,
+    "faces": [
+      [361, 130, 254, 254],
+      [83, 156, 253, 253],
+      [660, 164, 239, 239]
+    ],
+    "confidence": "na"
+  }
+]

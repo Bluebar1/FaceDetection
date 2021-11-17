@@ -29,10 +29,12 @@ def getResult(location, det=None) :
         faces.append(face['box'])
         confidences.append(face['confidence'])
 
+    result.setAny(
+        confidence = confidences,
+        faces = faces,
+        isSuccess = len(data) > 0
+    )
     
-    result.set_confidence(confidences)
-    result.set_isSuccess(len(data) > 0)
-    result.set_faces(faces)
     marked_img = utils.drawFaces(img, faces)
     result.set_img(marked_img)
     return result

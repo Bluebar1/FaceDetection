@@ -1,0 +1,231 @@
+#:kivy 2.0
+
+
+MDBoxLayout:
+
+    
+   
+    orientation: "vertical"
+    
+
+    MDToolbar:
+        id: toolbar
+        title: "Live"
+        md_bg_color: app.theme_cls.primary_color
+        
+    MDBottomNavigation:
+        id: panel
+        
+
+        MDBottomNavigationItem:
+            name: "Live"
+            text: self.name
+            on_tab_release: toolbar.title = self.name
+            
+            BoxLayout:
+                size: self.parent.size  # important!
+                pos: self.parent.pos  # important!
+                orientation: 'vertical'
+                
+                
+
+                MDLabel:
+                    font_style: "Body1"
+                    theme_text_color: "Primary"
+                    text: "Select an algorithm to run in Live mode"
+                    halign: "center"
+                        
+                Button:
+                    text: 'mtcnn'
+                    size_hint_x: None
+                    size_hint_y: None
+                    pos_hint: {'right': .55}
+                    on_release: app.runLive(self.text)
+                        
+                        
+                    
+                Button:
+                    text: 'haar'
+                    size_hint_x: None
+                    size_hint_y: None
+                    # height: 44
+                    # width: 100
+                    pos_hint: {'right': .55}
+                    # pos_hint: {"center_x": .5, "center_y": .5}
+                    on_release: app.runLive(self.text)
+                        
+                        
+                    
+                Button:
+                    text: 'retina'
+                    size_hint_x: None
+                    size_hint_y: None
+                    pos_hint: {'right': .55}
+                    # height: 44
+                    # width: 100
+                    # pos_hint: {"center_x": .5, "center_y": .5}
+                    on_release: app.runLive(self.text) 
+                       
+
+
+                
+
+        MDBottomNavigationItem:
+            name: "Instant"
+            text: self.name
+            on_tab_release: toolbar.title = self.name
+            
+            # canvas:
+            #     Color:
+            #         rgb: 1, 0, 0
+            #     Rectangle:
+            #         size: self.size
+
+            BoxLayout:
+                canvas.before:
+                    Color:
+                        rgb: 0,0,0
+                    Rectangle:
+                        pos: self.pos
+                        size: self.size
+                orientation: "vertical"
+
+                BoxLayout:
+                    orientation: "horizontal"
+
+                    BoxLayout:
+                        orientation: "vertical"
+                        size: root.width, root.height
+                        padding: 50
+
+                        Label:
+                            id: mainlabel_id
+                            text: "Select an algorithm below"
+                            font_size: 16
+                        Button:
+                            text: "mtcnn"
+                            on_release: mainlabel_id.text = self.text
+                            
+                        Button:
+                            text: "haar"
+                            on_release: mainlabel_id.text = self.text
+                            
+                        Button:
+                            text: "retina"
+                            on_release: mainlabel_id.text = self.text
+                            
+
+                        # Spinner:
+                        #     id: spinner_id
+                        #     text: "Choose Algorithm"
+                        #     values: ["mtcnn", "retina", "haar"]
+                        #     background_color: (33/255,166/255,166/255,1)
+                    
+                    BoxLayout:
+                        orientation: "vertical"
+                    
+                        Label:
+                            id: file_label_id
+                            text: "Select a file below"
+                            font_size: 16
+                            size_hint: (1,.3)
+                        FileChooserListView:
+                            canvas.before:
+                                Color:
+                                    rgb: 0, 0, 0
+                                Rectangle:
+                                    size: self.size
+                            id: filechooser
+                            path: "data/images/input"
+                            on_selection: 
+                                # app.select_image(filechooser.selection)
+                                my_image.source = filechooser.selection[0]
+                BoxLayout:
+                    orientation: "horizontal"
+
+                    Image:
+                        id: my_image
+                        # source: app.instantImagePath
+                    BoxLayout:
+                        orientation: "vertical"
+                        Label:
+                            text: "Results Displayed Here"
+                            font_size: 20
+                            size_hint: (1,.25)
+                        Label:
+                            text: "Run Time:"
+                            font_size: 14
+                            size_hint: (1,.25)
+                        Label:
+                            text: "Faces Detected:"
+                            font_size: 14
+                            size_hint: (1,.25)
+                        
+                        Button:
+                            text: "Run Tests"
+                            font_size: 32
+                            size_hint: (1,.25)
+                            on_release: app.runInstant([mainlabel_id.text, my_image.source])
+
+
+                    
+
+
+                
+            # BoxLayout:
+            #     orientation: "vertical"
+            #     size: root.width, root.height
+
+            #     padding: 50
+            #     spacing: 20
+            #     # Label:
+            #     #     id: imgPathLabel
+            #     #     text: "Select an image"
+            #     #     font_size: 32
+            #     BoxLayout:
+            #         orientation: "horizontal"
+            #         size: root.width, root.height
+
+            #         Label:
+            #             id: mainlabel_id
+            #             text: "Select an algorithm below"
+            #             font_size: 32
+            #         Button:
+            #             text: "mtcnn"
+            #         Button:
+            #             text: "haar"
+            #         Button:
+            #             text: "retina"
+            #         # Spinner:
+            #         #     id: spinner_id
+            #         #     text: "Choose Algorithm"
+            #         #     values: ["mtcnn", "retina", "haar"]
+            #         #     background_color: (33/255,166/255,166/255,1)
+
+            #     Image:
+            #         id: my_image
+            #         source: app.instantImagePath
+
+            #     FileChooserListView:
+            #         id: filechooser
+            #         path: "data/images/input"
+                    
+            #         on_selection: 
+            #             app.select_image(filechooser.selection)
+            #             my_image.source = filechooser.selection[0]
+                    
+            #     Button:
+            #         text: "Next Screen"
+            #         font_size: 32
+            #         on_release: app.runInstant([spinner_id.text, my_image.source])
+        MDBottomNavigationItem:
+            name: "Offline"
+            text: "Offline"
+            on_tab_release: toolbar.title = self.name
+            
+
+            MDLabel:
+                font_style: "Body1"
+                theme_text_color: "Primary"
+                text: "Oh god JS again"
+                halign: "center"

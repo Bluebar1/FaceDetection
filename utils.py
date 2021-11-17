@@ -29,6 +29,10 @@ def appendJSON(filePath, jsonData) :
 
 
 
+def loadJSON(filepath) :
+    with open(filepath, 'r') as file:
+            return json.load(file)
+
 def drawFaces(img_data, faces) :
     for (x,y,w,h) in faces:
         img_data = cv2.rectangle(img_data, (x, y), (x + w, y + h),

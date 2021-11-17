@@ -10,9 +10,9 @@ Takes input from command line using the input() function
 Stored as list args[]
 Passes args to given mode 
 """
+
+
 args = []
-
-
 mode = input('What mode would you like to use? Options: instant|live|offline \n : ')
 
 if mode == 'instant':
@@ -26,6 +26,7 @@ elif mode == 'offline':
     args.append(input('Enter an algorithm. Options: mtcnn|haar|retina \n : '))
     args.append(input('Enter the name of the dataset folder in data/images/input/. Example: ffhq \n : '))
     args.append(input('Enter a limit. For no limit type 0 \n : '))
+    args.append(input('Compare with correct answers? Options: y|n \n : '))
     runOffline(args)
 else:
      print(f'ERROR: "{mode}" is not a mode')

@@ -1,0 +1,7 @@
+opencv-python
+mtcnn-opencv
+numpy
+pillow
+tensorflow
+retina-face
+kivymd

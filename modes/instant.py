@@ -18,7 +18,8 @@ from algorithms import retina
 def runInstant(args):
     
     algorithm = args[0]
-    location = f'{config.inputPath}/{args[1]}'
+    location = args[1]
+    # location = f'{config.inputPath}/{args[1]}'
 
     print(f'Running instant mode \n Algorithm: {algorithm} \n File: {location} \n ...')
     

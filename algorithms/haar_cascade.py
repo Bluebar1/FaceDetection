@@ -17,10 +17,13 @@ def getResult(location, det=None) :
         face_data = []
     else : 
         face_data = faces.tolist()
-    
-    result.set_confidence('na')
-    result.set_isSuccess('na')
-    result.set_faces(face_data)
+
+    result.setAny(
+        confidence='na',
+        isSuccess='na',
+        faces = face_data
+    )
+
     marked_img = utils.drawFaces(img, face_data)
     result.set_img(marked_img)
     return result

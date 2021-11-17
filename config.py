@@ -10,4 +10,5 @@ liveImg = 'data/images/output/liveframe.jpg'
 offlineOutputPath = 'data/images/output/offline'
 offlineLatexLocation = 'data/results/latex.txt'
 retinaTempSaveLocation = outputPath + '/retina.jpg'
+markingsLoc = 'data/images/input/markings/'
 

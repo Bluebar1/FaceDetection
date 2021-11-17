@@ -12,7 +12,6 @@ cd into FaceDetection directory in windows command prompt
 > python new_kiv.py  
 
 ## Every time:
-> python -m virtualenv virt  
 > source virt/Scripts/activate  
 > python new_kiv.py    
 

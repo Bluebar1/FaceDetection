@@ -1,2 +1,10 @@
 
-*.pyc
+virt/
+algorithms/__pycache__/
+__pycache__/
+data/images/
+data/results/
+data/
+data/images/output/instant_result.jpg
+data/images/output/instant_result.jpg
+modes/__pycache__/

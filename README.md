@@ -4,7 +4,7 @@ ICSI499 Capstone Project
 # Commands to run:  
 ## First Time Setup
 Make sure python version <= 3.9  
-> cd into FaceDetection directory in windows command prompt  
+cd into FaceDetection directory in windows command prompt  
 > python -m pip install --upgrade pip setuptools virtualenv  
 > python -m virtualenv virt  
 > virt/Scripts/activate  

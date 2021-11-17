@@ -3,19 +3,19 @@ ICSI499 Capstone Project
 
 # Commands to run:  
 ## First Time Setup
-Make sure python version <= 3.9
-cd into FaceDetection directory in windows command prompt
-python -m pip install --upgrade pip setuptools virtualenv
-python -m virtualenv virt
-virt/Scripts/activate
-python -m pip install kivy[base] kivy_examples
-pip install -r requirements.txt
-python new_kiv.py
+Make sure python version <= 3.9  
+> cd into FaceDetection directory in windows command prompt  
+> python -m pip install --upgrade pip setuptools virtualenv  
+> python -m virtualenv virt  
+> virt/Scripts/activate  
+> python -m pip install kivy[base] kivy_examples  
+> pip install -r requirements.txt  
+> python new_kiv.py  
 
 ## Every time:
-python -m virtualenv virt
-source virt/Scripts/activate
-python new_kiv.py  
+> python -m virtualenv virt  
+> source virt/Scripts/activate  
+> python new_kiv.py    
 
 
 # Project Overview

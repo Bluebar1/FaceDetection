@@ -1,7 +1,6 @@
 # FaceDetection
 ICSI499 Capstone Project  
-
-# Commands to run:  
+ 
 ## First Time Setup
 Make sure python version <= 3.9  
 cd into FaceDetection directory in windows command prompt  

@@ -26,7 +26,8 @@ class Test(MDApp):
             pass
 
     def build(self):
-        self.title = "Face Detection Algorithms"
+        self.icon = "logo.png"
+        self.title = "Faceify"
         self.theme_cls.primary_palette = "BlueGray"
         self.theme_cls.accent_palette = "Blue"
         return Builder.load_file('new_kiv.kv')

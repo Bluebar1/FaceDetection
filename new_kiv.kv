@@ -8,10 +8,10 @@ MDBoxLayout:
     orientation: "vertical"
     
 
-    MDToolbar:
-        id: toolbar
-        title: "Live"
-        md_bg_color: app.theme_cls.primary_color
+    #MDToolbar:
+    #    id: toolbar
+    #    title: "Live"
+    #    md_bg_color: app.theme_cls.primary_color
         
     MDBottomNavigation:
         id: panel
@@ -20,7 +20,7 @@ MDBoxLayout:
         MDBottomNavigationItem:
             name: "Live"
             text: self.name
-            on_tab_release: toolbar.title = self.name
+            #on_tab_release: toolbar.title = self.name
             
             BoxLayout:
                 size: self.parent.size  # important!
@@ -73,7 +73,7 @@ MDBoxLayout:
         MDBottomNavigationItem:
             name: "Instant"
             text: self.name
-            on_tab_release: toolbar.title = self.name
+            #on_tab_release: toolbar.title = self.name
             
             # canvas:
             #     Color:
@@ -222,7 +222,7 @@ MDBoxLayout:
         MDBottomNavigationItem:
             name: "Offline"
             text: "Offline"
-            on_tab_release: toolbar.title = self.name
+            #on_tab_release: toolbar.title = self.name
             
 
             BoxLayout:

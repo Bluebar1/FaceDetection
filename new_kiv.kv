@@ -220,11 +220,14 @@ MDBoxLayout:
             #         font_size: 32
             #         on_release: app.runInstant([spinner_id.text, my_image.source])
         MDBottomNavigationItem:
-            name: "Offline"
-            text: "Offline"
+			id: OfflineID
+            name: "Folder"
+            text: "Folder"
+			
+			selectedAlgorithm: ""
+			
             #on_tab_release: toolbar.title = self.name
             
-
             BoxLayout:
                 canvas.before:
                     Color:
@@ -245,18 +248,25 @@ MDBoxLayout:
                         Label:
                             id: mainlabel_id
                             text: "Select an algorithm below"
+	
                             font_size: 16
                         Button:
-                            text: "mtcnn"
-                            on_release: mainlabel_id.text = self.text
+                            text: "mtcnn"	
+                            on_release: 
+								mainlabel_id.text = "Selected algorithm: " + self.text
+								OfflineID.selectedAlgorithm = self.text
                             
                         Button:
                             text: "haar"
-                            on_release: mainlabel_id.text = self.text
+                            on_release: 
+								mainlabel_id.text = "Selected algorithm: " + self.text
+								OfflineID.selectedAlgorithm = self.text
                             
                         Button:
                             text: "retina"
-                            on_release: mainlabel_id.text = self.text
+                            on_release: 
+								mainlabel_id.text = "Selected algorithm: " + self.text
+								OfflineID.selectedAlgorithm = self.text
                             
 
                         # Spinner:
@@ -270,7 +280,7 @@ MDBoxLayout:
                     
                         Label:
                             id: folder_label_id
-                            text: "Select a file below"
+                            text: "Select a folder below"
                             font_size: 16
                             size_hint: (1,.3)
                         FileChooserListView:
@@ -282,30 +292,64 @@ MDBoxLayout:
                             id: folderchooser
                             path: "data/images/input"
                             dirselect: True
+							filters: [lambda folder, filename: not filename.endswith('')]
                             on_selection: folder_path_label.text = "Chosen Folder: " + folderchooser.selection[0]
-                BoxLayout:
+				
+				BoxLayout:
                     orientation: "horizontal"
 
                     Label:
                         id: folder_path_label
                         text: "Chosen Folder:"
-                    BoxLayout:
+                        text_size: self.width, None
+						size_hint: (1,0.5)
+                    BoxLayout:						
                         orientation: "vertical"
+						
+						TextInput:
+							hint_text: "Enter limit of pictures to test."
+							id: pictureLimitInput
+							size_hint: (1,0.2)
+						TextInput:
+							hint_text: "(OPT) Enter marking JSON file name:"
+							id: markingNameInput
+							size_hint: (1,0.2)
                         Label:
                             text: "Results Displayed Here"
+							text_size: self.size
+							halign: 'left'
                             font_size: 20
                             size_hint: (1,.25)
                         Label:
-                            text: "Run Time:"
+							id: offlineRunTime
+                            text: "Run Time: "
+							text_size: self.size
+							halign: 'left'
                             font_size: 14
-                            size_hint: (1,.25)
+                            size_hint: (1,.20)
+						Label:
+							id: offlineAvgRunTime
+                            text: "Avg. Run Time: "
+							text_size: self.size
+							halign: 'left'
+                            font_size: 14
+                            size_hint: (1,.20)	
                         Label:
-                            text: "Faces Detected:"
+							id: offlineFaceCounted
+                            text: "Faces Detected: "
+							text_size: self.size
+							halign: 'left'
                             font_size: 14
-                            size_hint: (1,.25)
-                        
+                            size_hint: (1,.20)
+						Label:
+							id: offlineAvgFaceCounted
+                            text: "Avg. Faces Detected: "
+							text_size: self.size
+							halign: 'left'
+                            font_size: 14
+                            size_hint: (1,.20)
                         Button:
                             text: "Run Tests"
                             font_size: 32
-                            size_hint: (1,.25)
-                            on_release: app.runInstant([mainlabel_id.text, my_image.source])
+                            size_hint: (1,.3)
+                            on_release: app.runOffline([OfflineID.selectedAlgorithm, folderchooser.selection[0], pictureLimitInput.text, markingNameInput.text])

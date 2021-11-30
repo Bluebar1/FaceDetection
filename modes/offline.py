@@ -64,6 +64,8 @@ def runOffline(callingScript, args):
     # Shrink list to limit arg
     if limit != 0 : del images[limit:]
 
+    totalNumberOfFiles = len(images)
+
     if algorithm == 'mtcnn' :
         det = MTCNN()
     elif algorithm == 'haar' :
@@ -74,6 +76,9 @@ def runOffline(callingScript, args):
 
     for filename in tqdm(images) :
         if (filename[-3:] == "png") | (filename[-3:] == "jpg"): #Accepted file types
+            currentScanProgress = (totalImagesChecked+1) / totalNumberOfFiles
+            callingScript.updateOfflineProgress(currentScanProgress, filename)
+            
             tic = utils.currentTime()
             
             if algorithm == 'mtcnn' :
@@ -121,10 +126,7 @@ def runOffline(callingScript, args):
     avgFaces = (facesDetected / totalImagesChecked)
     avgRuntime = (totalRuntime / totalImagesChecked)
 
-    callingScript.UpdateOfflineRuntimeResult(totalRuntime)
-    callingScript.UpdateOfflineFacesDetectedResult(facesDetected)
-    callingScript.UpdateOfflineAvgRuntimeResult(avgRuntime)
-    callingScript.UpdateOfflineAvgFacesDetectedResult(avgFaces)
+    callingScript.updateOfflineResults(totalRuntime,avgRuntime,facesDetected,avgFaces)
 
     if algorithm == 'haar' :
         avgConfidence = 'na'

@@ -1,5 +1,5 @@
 #:kivy 2.0
-
+#:import Clipboard kivy.core.clipboard.Clipboard
 
 MDBoxLayout:
 
@@ -27,8 +27,6 @@ MDBoxLayout:
                 pos: self.parent.pos  # important!
                 orientation: 'vertical'
                 
-                
-
                 MDLabel:
                     font_style: "Body1"
                     theme_text_color: "Primary"
@@ -71,10 +69,14 @@ MDBoxLayout:
                 
 
         MDBottomNavigationItem:
-            name: "Instant"
-            text: self.name
+			id: InstantID
+			name: "Picture"
+            text: "Picture"
             #on_tab_release: toolbar.title = self.name
             
+			selectedAlgorithm: ""
+			selectedImage: ""
+			
             # canvas:
             #     Color:
             #         rgb: 1, 0, 0
@@ -99,20 +101,26 @@ MDBoxLayout:
                         padding: 50
 
                         Label:
-                            id: mainlabel_id
+                            id: instantMainlabel_id
                             text: "Select an algorithm below"
                             font_size: 16
                         Button:
                             text: "mtcnn"
-                            on_release: mainlabel_id.text = self.text
+                            on_release: 
+								instantMainlabel_id.text = "Selected algorithm: " + self.text
+								InstantID.selectedAlgorithm = "mtcnn"
                             
                         Button:
                             text: "haar"
-                            on_release: mainlabel_id.text = self.text
+                            on_release: 
+								instantMainlabel_id.text = "Selected algorithm: " + self.text
+								InstantID.selectedAlgorithm = "haar"
                             
                         Button:
                             text: "retina"
-                            on_release: mainlabel_id.text = self.text
+                            on_release: 
+								instantMainlabel_id.text = "Selected algorithm: " + self.text
+								InstantID.selectedAlgorithm = "retina"
                             
 
                         # Spinner:
@@ -148,25 +156,43 @@ MDBoxLayout:
                         source: ""
                         # source: app.instantImagePath
                     BoxLayout:
-                        orientation: "vertical"
-                        Label:
-                            text: "Results Displayed Here"
-                            font_size: 20
-                            size_hint: (1,.25)
-                        Label:
-                            text: "Run Time:"
-                            font_size: 14
-                            size_hint: (1,.25)
-                        Label:
-                            text: "Faces Detected:"
-                            font_size: 14
-                            size_hint: (1,.25)
-                        
-                        Button:
-                            text: "Run Tests"
-                            font_size: 32
-                            size_hint: (1,.25)
-                            on_release: app.runInstant([mainlabel_id.text, my_image.source])
+						orientation: "vertical"
+						
+						BoxLayout:
+							orientation: "vertical"
+							padding: [10,20,10,20]
+							Label:
+								text: "Results Displayed Here"
+								text_size: self.size
+								halign: 'left'
+								font_size: 20
+								size_hint: (1,.20)
+							Label:
+								id: instantRunTime
+								text: "Run Time: "
+								text_size: self.size
+								halign: 'left'
+								font_size: 14
+								size_hint: (1,.20)
+							Label:
+								id: instantFaceCounted
+								text: "Faces Detected: "
+								text_size: self.size
+								halign: 'left'
+								font_size: 14
+								size_hint: (1,.20)
+							Label:
+								id: instantOuputJSONFilePath
+								text: "Output JSON File:"
+								text_size: self.size
+								halign: 'left'
+								font_size: 14
+								size_hint: (1,.40)
+						Button:
+							text: "Run Tests"
+							font_size: 32
+							size_hint: (1,.25)
+							on_release: app.runInstant([InstantID.selectedAlgorithm, InstantID.selectedImage])
 
 
                     
@@ -224,7 +250,7 @@ MDBoxLayout:
             name: "Folder"
             text: "Folder"
 			
-			selectedAlgorithm: ""
+			selectedAlgorithm: ""	
 			
             #on_tab_release: toolbar.title = self.name
             
@@ -246,26 +272,26 @@ MDBoxLayout:
                         padding: 50
 
                         Label:
-                            id: mainlabel_id
+                            id: OfflineMainLabel_id
                             text: "Select an algorithm below"
 	
                             font_size: 16
                         Button:
                             text: "mtcnn"	
                             on_release: 
-								mainlabel_id.text = "Selected algorithm: " + self.text
+								OfflineMainLabel_id.text = "Selected algorithm: " + self.text
 								OfflineID.selectedAlgorithm = self.text
                             
                         Button:
                             text: "haar"
                             on_release: 
-								mainlabel_id.text = "Selected algorithm: " + self.text
+								OfflineMainLabel_id.text = "Selected algorithm: " + self.text
 								OfflineID.selectedAlgorithm = self.text
                             
                         Button:
                             text: "retina"
                             on_release: 
-								mainlabel_id.text = "Selected algorithm: " + self.text
+								OfflineMainLabel_id.text = "Selected algorithm: " + self.text
 								OfflineID.selectedAlgorithm = self.text
                             
 
@@ -297,12 +323,44 @@ MDBoxLayout:
 				
 				BoxLayout:
                     orientation: "horizontal"
+					
+					BoxLayout:
+						orientation: "vertical"
+						padding: [20,0,20,10]
+						
+						Label:
+							id: folder_path_label
+							text: "Chosen Folder:"
+							text_size: self.width, None
+							size_hint: (1,0.4)
+						BoxLayout:			
+							orientation: "vertical"
+							size_hint: (1,0.4)
+							
+							ProgressBar:
+								id: offlineModeCurrentProgress
+								value: 0
+								min: 0
+								max: 1
+								size_hint: (1,0.2)
+								#pos_hint: {'y':.1}
+							Label:
+								id: offlineModeCurrentFile
+								text: ""
+								valign: 'top'
+								text_size: self.width, None
+								size_hint: (1,1)
+								#pos_hint: {'y':.1}
+								
+						Button:
+							id: saved_folder_path
+							outputLatexFilePath: ""
+							text: "Copy output LeTeX Folder to Clipboard"
+							text_size: self.width, None
+							size_hint: (1,0.2)
+							halign: 'center'
+							on_release: Clipboard.copy(saved_folder_path.outputLatexFilePath)
 
-                    Label:
-                        id: folder_path_label
-                        text: "Chosen Folder:"
-                        text_size: self.width, None
-						size_hint: (1,0.5)
                     BoxLayout:						
                         orientation: "vertical"
 						

@@ -15,7 +15,7 @@ from algorithms import mtcnn
 from algorithms import haar_cascade
 from algorithms import retina
 
-def runInstant(args):
+def runInstant(callingScript, args):
     
     algorithm = args[0]
     location = args[1]
@@ -25,15 +25,13 @@ def runInstant(args):
     
     # start timer
     tic = utils.currentTime()
-
+    
     if algorithm == 'mtcnn' :
         result = mtcnn.getResult(location)
     elif algorithm == 'haar' :
         result = haar_cascade.getResult(location)
     elif algorithm == 'retina' :
-        result = retina.getResult(location)
-        
-        
+        result = retina.getResult(location)     
     else :
         print('Algorithm not supported')
         quit()
@@ -57,10 +55,14 @@ def runInstant(args):
     # append result to JSON file
     
     utils.appendJSON(config.instantDataLocation, result)
-    # Open image in new window
+    
     print(f'JSON result appended to {config.instantDataLocation}')
     print(f'Marked images saved to {config.instantImageOutput}')
-    print('Opening image...')
-    im = Image.open(config.instantImageOutput)
-    im.show()
+
+    callingScript.updateInstantResults(result.get_runTime(), len(result.get_faces()), result.get_resultSaveLoc())
+    
+    # Open image in new window
+    #print('Opening image...')
+    #im = Image.open(config.instantImageOutput)
+    #im.show()
 

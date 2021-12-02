@@ -33,6 +33,7 @@ def click_event(event, x, y, flags, params):
 
 # driver function
 if __name__=="__main__":
+    
 
     dataset = input('Enter the name of the folder found in your data/images/input directory. Examples test|ffhq \n : ')
     print('Entering marking mode for dataset: ' + dataset)
@@ -53,12 +54,14 @@ if __name__=="__main__":
     f = open(jsonpath, 'w+')
     f.write('[]')
     f.close()
-    images = ['test1.jpg', 'test2.jpg', 'test3.jpg']
+    
     faces = []
     
-    # path = config.inputPath + '/'+ dataset + '/'
+    
+    
+
     images = os.listdir(imagesPath)
-    del images[10:]
+
     
     
 

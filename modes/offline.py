@@ -54,9 +54,15 @@ def runOffline(callingScript, args):
     delPreviousResults()
 
     facesDetected = 0
-    confidence = 0
     totalRuntime = 0
     totalImagesChecked = 0 #Counted instead of getting length of list since some files may have a invaild file type
+    
+    if isTrained :
+        totalFalseDetections = 0
+        totalAccuracy = 0
+    else:
+        totalFalseDetections = 'na'
+        totalAccuracy = 'na'
     
     # Gets list paths to images in selected dataset
     images = os.listdir(path)
@@ -65,76 +71,88 @@ def runOffline(callingScript, args):
     if limit != 0 : del images[limit:]
 
     totalNumberOfFiles = len(images)
-
+    # Initialize algorithm
     if algorithm == 'mtcnn' :
         det = MTCNN()
     elif algorithm == 'haar' :
         det = cv2.CascadeClassifier(cv2.data.haarcascades + "haarcascade_frontalface_default.xml")
-        
     elif algorithm == 'retina' :
         model = RetinaFace.build_model()
 
+
     for filename in tqdm(images) :
         if (filename[-3:] == "png") | (filename[-3:] == "jpg"): #Accepted file types
-            currentScanProgress = (totalImagesChecked+1) / totalNumberOfFiles
-            callingScript.updateOfflineProgress(currentScanProgress, filename)
-            
-            tic = utils.currentTime()
-            
-            if algorithm == 'mtcnn' :
-                result = mtcnn.getResult(path + '/' + filename, det)
-            elif algorithm == 'haar' :
-                result = haar_cascade.getResult(path + '/' + filename, det)
-            elif algorithm == 'retina' :
-                result = retina.getResult(path + '/' + filename, model)
-                
-            toc = utils.currentTime()
+          currentScanProgress = (totalImagesChecked+1) / totalNumberOfFiles
+          callingScript.updateOfflineProgress(currentScanProgress, filename)
 
-            if isTrained :
-                marks = data[i]
-                i+=1
-                isSuccess = runTest(result, marks)
-            else : 
-                isSuccess = 'na'
+          tic = utils.currentTime()
 
-            result.setAny(
-                resultSaveLoc=config.offlineOutputPath,
-                algorithm=algorithm,
-                dateTime=utils.dateTime(),
-                runTime=round(toc-tic, 0),
-                isSuccess=isSuccess
-            )
-            
+          if algorithm == 'mtcnn' :
+              result = mtcnn.getResult(path + '/' + filename, det)
+          elif algorithm == 'haar' :
+              result = haar_cascade.getResult(path + '/' + filename, det)
+          elif algorithm == 'retina' :
+              result = retina.getResult(path + '/' + filename, model)
 
-            facesDetected += len(result.get_faces())
-            totalRuntime += result.get_runTime()
-            totalImagesChecked += 1
-            
-            if algorithm != 'haar' :
+          toc = utils.currentTime()
 
-                for conf in result.get_confidence() :
-                    confidence += conf
+          if isTrained :
+              marks = data[i]
+              i+=1
+              isSuccess = runTest(result, marks, filename)
+          else : 
+              isSuccess = 'na'
 
-            # Save new image file
-            tic = utils.currentTime()
-            cv2.imwrite(config.offlineOutputPath + '/' + filename, result.get_img())
+          result.setAny(
+              resultSaveLoc=config.offlineOutputPath,
+              algorithm=algorithm,
+              dateTime=utils.dateTime(),
+              runTime=round(toc-tic, 0),
+              isSuccess=isSuccess
+          )
 
-            result.set_img(f'{filename}')
-            utils.appendJSON(config.offlineDataLocation, result)
+          facesDetected += len(result.get_faces())
+          totalRuntime += result.get_runTime()
+          
+          # Save new image file
+          cv2.imwrite(config.offlineOutputPath + '/' + filename, result.get_img())
 
-    avgConfidence = round(confidence / facesDetected, 5)
+          result.setAny(
+              resultSaveLoc=config.offlineOutputPath,
+              algorithm=algorithm,
+              dateTime=utils.dateTime(),
+              runTime=round(toc-tic, 0),
+              isSuccess=isSuccess
+          )
+        
+          totalImagesChecked += 1
+          facesDetected += len(result.get_faces())
+          totalRuntime += result.get_runTime()
+          
+          if isTrained :
+            totalFalseDetections += result.get_falseDetections()
+            totalAccuracy += result.get_accuracy()
+          
+          result.set_img(f'{filename}')
+          utils.appendJSON(config.offlineDataLocation, result)
+    
     avgFaces = (facesDetected / totalImagesChecked)
     avgRuntime = (totalRuntime / totalImagesChecked)
 
+    if isTrained :
+        avgFalseDetections = (totalFalseDetections / totalImagesChecked)
+        avgAccuracy = (totalAccuracy / totalImagesChecked)    
+    else:
+        avgFalseDetections = 'na'
+        avgAccuracy = 'na'
+    
     callingScript.updateOfflineResults(totalRuntime,avgRuntime,facesDetected,avgFaces)
-
-    if algorithm == 'haar' :
-        avgConfidence = 'na'
-
 
     # Writing test result in latex format to txt file
     f = open(config.offlineLatexLocation, 'w+')
-    table = [algorithm, str(totalRuntime), str(avgRuntime), str(facesDetected), str(avgFaces), str(avgConfidence)]
+    table = [algorithm, str(totalRuntime), str(avgRuntime), str(facesDetected), str(avgAccuracy), str(avgFalseDetections)]
+    
+    
     tempStr = ''
     for data in table :
         tempStr += data + '&'
@@ -145,6 +163,10 @@ def runOffline(callingScript, args):
     
     f.close()
 
+    print('Average Runtime: ' + str(avgRuntime))
+    print('Faces Detected: ' + str(facesDetected))
+    print('Average Accuracy: ' + str(avgAccuracy))
+    print('Total False Detections: ' + str(totalFalseDetections))
     print('Marked images saved to ' + config.offlineOutputPath)
     print('JSON test results data saved to ' + config.offlineDataLocation)
 
@@ -156,15 +178,11 @@ def delPreviousResults() :
     for filename in os.listdir(config.offlineOutputPath) :
         os.remove(config.offlineOutputPath + '/' + filename)
 
-
-def runTest(result, data) :
+def runTest(result, data, filename) :
     faces = result.get_faces()
     img = result.get_img()
 
     successCount = 0
-    dataLength = len(data)
-
-    
     for (px, py) in data :
         found = False
         for (x,y,w,h) in faces :
@@ -179,19 +197,20 @@ def runTest(result, data) :
             result.set_img(cv2.rectangle(img, (px-100, py-100), (px+100, py+100),
                     (0, 0, 255), 2))
             
-    
+    falseDetections=len(faces) - successCount
+    accuracy = successCount / len(data)
+
     result.setAny(
-        accuracy=successCount / len(data),
-        falseDetections=len(faces) - successCount
+        accuracy=accuracy,
+        falseDetections=falseDetections
     )
     
+    # save image file if any false detections
+    if falseDetections !=0 :
+        cv2.imwrite(config.offlineOutputPath + '/' + filename, result.get_img())
 
+    ##TODO: Also save image file if accuracy not 1
     if successCount == len(data) :
         return True
     else :
         return False
-
-    
-
-
-

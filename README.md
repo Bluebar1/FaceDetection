@@ -51,33 +51,41 @@ Parameter: Algorithm
 # Algorithm Overview:  
 
 ## MTCNN: (mtcnn_cv2)  
-> detector = MTCNN()  
-> detector.detect_faces(image)  
--This returns a list of dictionary objects and can be accessed using  
--data[face][‘box’] for (x,y,w,h) coordinates  
--data[face][‘confidence’] for the confidence of each  
+```python
+detector = MTCNN()  
+detector.detect_faces(image) 
+```
+This returns a list of dictionary objects and can be accessed using  
+data[face][‘box’] for (x,y,w,h) coordinates  
+  
 
 ## Haar Cascade: (OpenCV)  
-> detector = cv2.CascadeClassifier(cv2.data.haarcascades+  
-> "haarcascade_frontalface_default.xml")  
-> detector.detectMultiScale(image)  
--This returns a numpy.ndarray object that can be converted to a list using:  
-> face_data = faces.tolist()  
+```python
+detector = cv2.CascadeClassifier(cv2.data.haarcascades+  
+"haarcascade_frontalface_default.xml")  
+detector.detectMultiScale(image)  
+```
+This returns a numpy.ndarray object that can be converted to a list using:  
+```python
+face_data = faces.tolist()  
+```
 
 ## Retina: (RetinaFace)  
-> model = RetinaFace.build_model()  
-> RetinaFace.detect_faces(location, model=model)  
--This will return a dictionary object and can be accessed using:  
--data[face][‘facial_area’] for boxes  
+```python
+model = RetinaFace.build_model()  
+RetinaFace.detect_faces(location, model=model)  
+```
+This will return a dictionary object and can be accessed using:  
+data[face][‘facial_area’] for boxes  
 
 ## How coordinates work:  
 
 -Box coordinates of detected faces are stored in a (x, y, width, height) format  
 -In offline mode using the correct (x,y) points, each point will be compared to the detected faces to see if the point is within any of the detected boxes  
 
--Calculating if currect point (px,py) is contained within within faces (x,y,w,h)  
-successCount = 0  
-'''python
+### Calculating if currect point (px,py) is contained within within faces (x,y,w,h)  
+ ```python
+successCount = 0 
 for (px, py) in data :  
     found = False  
     for (x,y,w,h) in faces :  
@@ -87,11 +95,13 @@ for (px, py) in data :
             if (y1 < py and py < y2):  
                 found = True  
                 successCount+=1  
-'''
-
--Calculating FalseDetections and Accuracy:  
-> falseDetections=len(faces) - successCount  
-> accuracy = successCount / len(data)  
+```
+Calculating FalseDetections and Accuracy:  
+```python
+falseDetections=len(faces) - successCount  
+accuracy = successCount / len(data)
+```
+  
 
 
 ## Inputting correct face coordinates:  

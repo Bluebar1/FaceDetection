@@ -111,6 +111,7 @@ def runOffline(callingScript, args):
               isSuccess=isSuccess
           )
 
+          totalImagesChecked += 1
           facesDetected += len(result.get_faces())
           totalRuntime += result.get_runTime()
           
@@ -125,10 +126,6 @@ def runOffline(callingScript, args):
               isSuccess=isSuccess
           )
         
-          totalImagesChecked += 1
-          facesDetected += len(result.get_faces())
-          totalRuntime += result.get_runTime()
-          
           if isTrained :
             totalFalseDetections += result.get_falseDetections()
             totalAccuracy += result.get_accuracy()

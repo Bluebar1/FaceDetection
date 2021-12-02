@@ -145,7 +145,6 @@ def runTest(result, data, filename) :
     img = result.get_img()
 
     successCount = 0
-
     for (px, py) in data :
         found = False
         for (x,y,w,h) in faces :

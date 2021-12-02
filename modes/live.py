@@ -12,7 +12,7 @@ from retinaface import RetinaFace
 import numpy as np
 import utils
 import config
-
+import time
 
 def liveMTCNN() :
     print('Running live. Press Q to quit')
@@ -20,6 +20,9 @@ def liveMTCNN() :
     cap = cv2.VideoCapture()
     cap.open(0, cv2.CAP_DSHOW)
 
+    prevFrameTime = 0
+    newFrameTime = 0
+    
     while(True):
         ret, frame = cap.read()
 
@@ -31,6 +34,15 @@ def liveMTCNN() :
         
         utils.drawFaces(frame, faces)
 
+        frame = cv2.putText(frame, 'Running MTCNN', (20, 30), cv2.FONT_HERSHEY_PLAIN, 2, (0,0,255), 1, cv2.LINE_AA)
+        
+        newFrameTime = time.time()
+        fps = str(int(1/(newFrameTime-prevFrameTime)))
+        prevFrameTime = newFrameTime
+        frame = cv2.putText(frame, 'FPS: ' + fps, (20, 70), cv2.FONT_HERSHEY_PLAIN, 2, (0,0,255), 1, cv2.LINE_AA)
+        
+        frame = cv2.putText(frame, 'Press q to quit', (20, 90), cv2.FONT_HERSHEY_PLAIN, 1.5, (0,0,255), 1, cv2.LINE_AA)
+        
         cv2.imshow('frame', frame)
         if cv2.waitKey(1) & 0xFF == ord('q'):
             break
@@ -44,11 +56,24 @@ def liveHaar() :
     cap = cv2.VideoCapture()
     cap.open(0, cv2.CAP_DSHOW)
 
+    prevFrameTime = 0
+    newFrameTime = 0
+
     while(True) :
         ret, frame = cap.read()
         frame = cv2.resize(frame, (600, 400))
         faces = face_cascade.detectMultiScale(frame)
         utils.drawFaces(frame, faces)
+        
+        frame = cv2.putText(frame, 'Running Haar', (20, 30), cv2.FONT_HERSHEY_PLAIN, 2, (0,0,255), 1, cv2.LINE_AA)
+        
+        newFrameTime = time.time()
+        fps = str(int(1/(newFrameTime-prevFrameTime)))
+        prevFrameTime = newFrameTime
+        frame = cv2.putText(frame, 'FPS: ' + fps, (20, 70), cv2.FONT_HERSHEY_PLAIN, 2, (0,0,255), 1, cv2.LINE_AA)
+        
+        frame = cv2.putText(frame, 'Press q to quit', (20, 90), cv2.FONT_HERSHEY_PLAIN, 1.5, (0,0,255), 1, cv2.LINE_AA)
+        
         cv2.imshow('frame', frame)
         if cv2.waitKey(1) & 0xFF == ord('q'):
             break
@@ -62,6 +87,9 @@ def liveRetina() :
     cap = cv2.VideoCapture()
     cap.open(0, cv2.CAP_DSHOW)
     print('Running live. Click on video window and press Q to quit')
+
+    prevFrameTime = 0
+    newFrameTime = 0
 
     while(True) :
         ret, frame = cap.read()
@@ -85,6 +113,15 @@ def liveRetina() :
             
             utils.drawFaces(frame, faces)
         
+        frame = cv2.putText(frame, 'Running RetinaFace', (20, 30), cv2.FONT_HERSHEY_PLAIN, 2, (0,0,255), 1, cv2.LINE_AA)
+        
+        newFrameTime = time.time()
+        fps = str(int(1/(newFrameTime-prevFrameTime)))
+        prevFrameTime = newFrameTime
+        frame = cv2.putText(frame, 'FPS: ' + fps, (20, 70), cv2.FONT_HERSHEY_PLAIN, 2, (0,0,255), 1, cv2.LINE_AA)
+        
+        frame = cv2.putText(frame, 'Press q to quit', (20, 90), cv2.FONT_HERSHEY_PLAIN, 1.5, (0,0,255), 1, cv2.LINE_AA)
+        
         cv2.imshow('frame', frame)
         if cv2.waitKey(1) & 0xFF == ord('q'):
             break
@@ -102,7 +139,3 @@ def runLive(args) :
         liveHaar()
     elif algorithm == 'retina' :
         liveRetina()
-    
-    
-    
-

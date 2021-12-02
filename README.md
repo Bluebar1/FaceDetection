@@ -76,16 +76,18 @@ Parameter: Algorithm
 -In offline mode using the correct (x,y) points, each point will be compared to the detected faces to see if the point is within any of the detected boxes  
 
 -Calculating if currect point (px,py) is contained within within faces (x,y,w,h)  
-> successCount = 0  
-> for (px, py) in data :  
->     found = False  
->     for (x,y,w,h) in faces :  
->         x1, y1 = x , y  
->         x2, y2 = x1+w, y1+h  
->         if (x1 < px and px < x2):  
->             if (y1 < py and py < y2):  
->                 found = True  
->                 successCount+=1  
+successCount = 0  
+'''python
+for (px, py) in data :  
+    found = False  
+    for (x,y,w,h) in faces :  
+        x1, y1 = x , y  
+        x2, y2 = x1+w, y1+h  
+        if (x1 < px and px < x2):  
+            if (y1 < py and py < y2):  
+                found = True  
+                successCount+=1  
+'''
 
 -Calculating FalseDetections and Accuracy:  
 > falseDetections=len(faces) - successCount  

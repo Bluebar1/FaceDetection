@@ -33,6 +33,19 @@ def click_event(event, x, y, flags, params):
 
 # driver function
 if __name__=="__main__":
+    imagesPath = config.inputPath + '/Unmasked/'
+    images = os.listdir(imagesPath)
+    print("Images: " + str(len(images)))
+    jsonpath = config.markingsLoc + 'Unmasked_markings.json'
+    fakeData = []
+    for x in range(len(images)) :
+        fakeData.append([[504,608]])
+    
+    f = open(jsonpath, 'w+')
+    
+    json.dump(fakeData, f)
+    f.close()
+    quit()
 
     dataset = input('Enter the name of the folder found in your data/images/input directory. Examples test|ffhq \n : ')
     print('Entering marking mode for dataset: ' + dataset)
@@ -53,13 +66,17 @@ if __name__=="__main__":
     f = open(jsonpath, 'w+')
     f.write('[]')
     f.close()
-    images = ['test1.jpg', 'test2.jpg', 'test3.jpg']
+    # images = ['test1.jpg', 'test2.jpg', 'test3.jpg']
     faces = []
     
     # path = config.inputPath + '/'+ dataset + '/'
-    images = os.listdir(imagesPath)
-    del images[10:]
     
+
+    images = os.listdir(imagesPath)
+
+    # print(len(images))
+    # del images[10:]
+    # print(len(images))
     
 
     for im in tqdm(images) :

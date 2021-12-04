@@ -12,9 +12,10 @@ MDBoxLayout:
     #    id: toolbar
     #    title: "Live"
     #    md_bg_color: app.theme_cls.primary_color
-        
+
     MDBottomNavigation:
         id: panel
+        
         
 
         MDBottomNavigationItem:
@@ -23,47 +24,56 @@ MDBoxLayout:
             #on_tab_release: toolbar.title = self.name
             
             BoxLayout:
-                size: self.parent.size  # important!
-                pos: self.parent.pos  # important!
+                size: self.size  # important!
+                pos: self.pos  # important!
                 orientation: 'vertical'
+                canvas.before:
+                    Color:
+                        rgb: 96/255,125/255,139/255
+                    Rectangle:
+                        pos: self.pos
+                        size: self.size
+                #panel_color: 96/255,125/255,139/255,1
+
                 
                 MDLabel:
                     font_style: "Body1"
-                    theme_text_color: "Primary"
+                    theme_text_color: "Custom"
+                    text_color: 1,1,1,1
                     text: "Select an algorithm to run in Live mode"
                     halign: "center"
                         
                 Button:
                     text: 'mtcnn'
-                    size_hint_x: None
-                    size_hint_y: None
-                    pos_hint: {'right': .55}
+                    size_hint: 0.3, 0.2
+                    pos_hint: {'center_x':.5,'center_y':0.5}
                     on_release: app.runLive(self.text)
+                    background_color: (96/255,125/255,139/255)
                         
                         
                     
                 Button:
                     text: 'haar'
-                    size_hint_x: None
-                    size_hint_y: None
-                    # height: 44
-                    # width: 100
-                    pos_hint: {'right': .55}
+                    size_hint: 0.3, 0.2
+                    pos_hint: {'center_x':.5,'center_y':0.5}
                     # pos_hint: {"center_x": .5, "center_y": .5}
                     on_release: app.runLive(self.text)
-                        
+                    background_color: (96/255,125/255,139/255)
+
                         
                     
                 Button:
                     text: 'retina'
-                    size_hint_x: None
-                    size_hint_y: None
-                    pos_hint: {'right': .55}
+                    size_hint: 0.3, 0.2
+                    pos_hint: {'center_x':.5,'center_y':0.5}
                     # height: 44
                     # width: 100
                     # pos_hint: {"center_x": .5, "center_y": .5}
                     on_release: app.runLive(self.text) 
-                       
+                    background_color: (96/255,125/255,139/255)
+                MDLabel:
+                    size_hint: 0.3,0.2
+                      
 
 
                 
@@ -86,7 +96,7 @@ MDBoxLayout:
             BoxLayout:
                 canvas.before:
                     Color:
-                        rgb: 0,0,0
+                        rgb: 96/255,125/255,139/255
                     Rectangle:
                         pos: self.pos
                         size: self.size
@@ -106,18 +116,21 @@ MDBoxLayout:
                             font_size: 16
                         Button:
                             text: "mtcnn"
+                            background_color: (96/255,125/255,139/255)
                             on_release: 
 								instantMainlabel_id.text = "Selected algorithm: " + self.text
 								InstantID.selectedAlgorithm = "mtcnn"
                             
                         Button:
                             text: "haar"
+                            background_color: (96/255,125/255,139/255)
                             on_release: 
 								instantMainlabel_id.text = "Selected algorithm: " + self.text
 								InstantID.selectedAlgorithm = "haar"
                             
                         Button:
                             text: "retina"
+                            background_color: (96/255,125/255,139/255)
                             on_release: 
 								instantMainlabel_id.text = "Selected algorithm: " + self.text
 								InstantID.selectedAlgorithm = "retina"
@@ -192,6 +205,7 @@ MDBoxLayout:
 							text: "Run Tests"
 							font_size: 32
 							size_hint: (1,.25)
+                            background_color: (43/255,179/255,17/255,1)
 							on_release: app.runInstant([InstantID.selectedAlgorithm, InstantID.selectedImage])
 
 
@@ -257,7 +271,7 @@ MDBoxLayout:
             BoxLayout:
                 canvas.before:
                     Color:
-                        rgb: 0,0,0
+                        rgb: 96/255,125/255,139/255
                     Rectangle:
                         pos: self.pos
                         size: self.size
@@ -278,18 +292,21 @@ MDBoxLayout:
                             font_size: 16
                         Button:
                             text: "mtcnn"	
+                            background_color: (96/255,125/255,139/255)
                             on_release: 
 								OfflineMainLabel_id.text = "Selected algorithm: " + self.text
 								OfflineID.selectedAlgorithm = self.text
                             
                         Button:
                             text: "haar"
+                            background_color: (96/255,125/255,139/255)
                             on_release: 
 								OfflineMainLabel_id.text = "Selected algorithm: " + self.text
 								OfflineID.selectedAlgorithm = self.text
                             
                         Button:
                             text: "retina"
+                            background_color: (96/255,125/255,139/255)
                             on_release: 
 								OfflineMainLabel_id.text = "Selected algorithm: " + self.text
 								OfflineID.selectedAlgorithm = self.text
@@ -356,6 +373,7 @@ MDBoxLayout:
 							id: saved_folder_path
 							outputLatexFilePath: ""
 							text: "Copy output LeTeX Folder to Clipboard"
+                            background_color: (210/255,224/255,16/255)
 							text_size: self.width, None
 							size_hint: (1,0.2)
 							halign: 'center'
@@ -410,4 +428,5 @@ MDBoxLayout:
                             text: "Run Tests"
                             font_size: 32
                             size_hint: (1,.3)
+                            background_color: (43/255,179/255,17/255,1)
                             on_release: app.runOffline([OfflineID.selectedAlgorithm, folderchooser.selection[0], pictureLimitInput.text, markingNameInput.text])

@@ -10,6 +10,7 @@ import os
 import config
 import os, sys
 from kivy.resources import resource_add_path
+from PIL import Image
 
 
 class Test(MDApp):    
@@ -58,7 +59,10 @@ class Test(MDApp):
         self.root.ids.instantRunTime.text = "Run Time: " + str(runTime) + "ms"
         self.root.ids.instantFaceCounted.text = "Faces Detected: " + str(facesDetected)
         self.root.ids.instantOuputJSONFilePath.text = "Output Data Folder: " + self.root.ids.InstantID.outputFolder + config.instantDataLocation
-        self.root.ids.my_image.source = resultPicture
+        newResultPicture = resultPicture[0:-3] + "png"
+        im1 = Image.open(r''+resultPicture)
+        im1.save(r''+newResultPicture)
+        self.root.ids.my_image.source = newResultPicture
         self.root.ids.my_image.reload()
         
     def updateOfflineProgress(self, scanProgress, currentFileName):

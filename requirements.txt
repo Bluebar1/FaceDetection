@@ -6,3 +6,4 @@ tensorflow
 retina-face
 kivymd
 plyer
+Pillow

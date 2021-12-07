@@ -8,4 +8,6 @@ data/
 data/images/output/instant_result.jpg
 data/images/output/
 modes/__pycache__/
-
+build/
+dist/
+new_kiv.spec

@@ -40,7 +40,7 @@ class Test(MDApp):
 
     def chooseImage(self) :
         try: 
-            instantImagePath = filechooser.open_file(title="Pick an image file...", filters = [("*.png")])[0]
+            instantImagePath = filechooser.open_file(title="Pick an image file...", filters = [("*.png"), ("*.jpg"), ("*.jpeg")])[0]
             self.root.ids.my_image.source = instantImagePath # Try clause since if they click on a directory or any non-image, it won't error out
             self.root.ids.InstantID.selectedImage = instantImagePath
             #print(instantImagePath + "\\test\\another\\directory\\")
@@ -59,10 +59,7 @@ class Test(MDApp):
         self.root.ids.instantRunTime.text = "Run Time: " + str(runTime) + "ms"
         self.root.ids.instantFaceCounted.text = "Faces Detected: " + str(facesDetected)
         self.root.ids.instantOuputJSONFilePath.text = "Output Data Folder: " + self.root.ids.InstantID.outputFolder + config.instantDataLocation
-        newResultPicture = resultPicture[0:-3] + "png"
-        im1 = Image.open(r''+resultPicture)
-        im1.save(r''+newResultPicture)
-        self.root.ids.my_image.source = newResultPicture
+        self.root.ids.my_image.source = resultPicture
         self.root.ids.my_image.reload()
         
     def updateOfflineProgress(self, scanProgress, currentFileName):

@@ -8,6 +8,8 @@ from modes.offline import runOffline
 
 import os
 import config
+import os, sys
+from kivy.resources import resource_add_path
 
 
 class Test(MDApp):    
@@ -75,8 +77,16 @@ class Test(MDApp):
         self.title = "Faceify"
         self.theme_cls.primary_palette = "BlueGray"
         self.theme_cls.accent_palette = "Blue"
+        if hasattr(sys, '_MEIPASS'):
+            return Builder.load_file(sys._MEIPASS + '\\new_kiv.kv')
+        
         return Builder.load_file('new_kiv.kv')
+if __name__ == "__main__":
+    # these lines should be added
+    if hasattr(sys, '_MEIPASS'):
+        resource_add_path(os.path.join(sys._MEIPASS))
+    ###
+    Test().run()
 
-Test().run()
 
 

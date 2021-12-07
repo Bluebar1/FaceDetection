@@ -157,7 +157,7 @@ MDBoxLayout:
                                 Rectangle:
                                     size: self.size
                             id: filechooser
-                            path: ""
+                            #path: ""
                             on_selection: 
                                 app.select_image(filechooser.selection)
                                 # my_image.source = filechooser.selection[0]
@@ -333,7 +333,7 @@ MDBoxLayout:
                                 Rectangle:
                                     size: self.size
                             id: folderchooser
-                            path: ""
+                            #path: ""
                             dirselect: True
 							filters: [lambda folder, filename: not filename.endswith('')]
                             on_selection: folder_path_label.text = "Chosen Folder: " + folderchooser.selection[0]

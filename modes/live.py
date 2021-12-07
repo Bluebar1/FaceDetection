@@ -13,6 +13,8 @@ import numpy as np
 import utils
 import config
 import time
+import os
+
 
 def liveMTCNN() :
     print('Running live. Press Q to quit')
@@ -81,7 +83,7 @@ def liveHaar() :
     cap.release()
     cv2.destroyAllWindows()
 
-def liveRetina() :
+def liveRetina(outputFolder) :
     
     model = RetinaFace.build_model()
     cap = cv2.VideoCapture()
@@ -90,12 +92,12 @@ def liveRetina() :
 
     prevFrameTime = 0
     newFrameTime = 0
-
+    os.makedirs(outputFolder + config.outputPath, exist_ok=True)
     while(True) :
         ret, frame = cap.read()
         frame = cv2.resize(frame, (600, 400))
-        cv2.imwrite(config.retinaTempSaveLocation, frame)
-        resp = RetinaFace.detect_faces(config.retinaTempSaveLocation, model=model)
+        cv2.imwrite(outputFolder + config.retinaTempSaveLocation, frame)
+        resp = RetinaFace.detect_faces(outputFolder + config.retinaTempSaveLocation, model=model)
         if type(resp) is tuple :
             faces = []
         else :
@@ -131,11 +133,12 @@ def liveRetina() :
 
 
 
-def runLive(args) :
+def runLive(args, o) :
     algorithm = args
+    outputFolder = o
     if algorithm == 'mtcnn' :
-        liveMTCNN()
+        liveMTCNN(outputFolder)
     elif algorithm == 'haar' :
-        liveHaar()
+        liveHaar(outputFolder)
     elif algorithm == 'retina' :
-        liveRetina()
+        liveRetina(outputFolder)

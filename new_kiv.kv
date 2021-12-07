@@ -20,7 +20,9 @@ MDBoxLayout:
 
         MDBottomNavigationItem:
             name: "Live"
+            id: Live
             text: self.name
+            outputFolder: ""
             #on_tab_release: toolbar.title = self.name
             
             BoxLayout:
@@ -42,6 +44,14 @@ MDBoxLayout:
                     text_color: 1,1,1,1
                     text: "Select an algorithm to run in Live mode"
                     halign: "center"
+
+                Button:
+                    text: "Choose working directory"
+                    font_size: 16
+                    on_release:
+                        app.setWorkingFolder()
+                        #my_image.source = selectedImage
+                        #selectedImage = my_image.source
                         
                 Button:
                     text: 'mtcnn'
@@ -69,7 +79,7 @@ MDBoxLayout:
                     # height: 44
                     # width: 100
                     # pos_hint: {"center_x": .5, "center_y": .5}
-                    on_release: app.runLive(self.text) 
+                    on_release: app.runLive(self.text, Live.outputFolder) 
                     background_color: (96/255,125/255,139/255)
                 MDLabel:
                     size_hint: 0.3,0.2

@@ -18,8 +18,8 @@ class Test(MDApp):
     instantImagePath = ""
     
     
-    def runLive(self, alg) :
-        runLive(alg)
+    def runLive(self, alg, outputFolder) :
+        runLive(alg,outputFolder)
 
     def runInstant(self, args) :
         if((args[0] != "") & (args[1] != "") & (args[2] != "")):
@@ -34,6 +34,7 @@ class Test(MDApp):
         try: 
             workingFolder = filechooser.choose_dir(title="Choose the output directory...")[0]
             self.root.ids.InstantID.outputFolder = workingFolder
+            self.root.ids.Live.outputFolder = workingFolder
             #print(instantImagePath + "\\test\\another\\directory\\")
         except:
             pass

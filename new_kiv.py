@@ -39,7 +39,7 @@ class Test(MDApp):
 
     def chooseImage(self) :
         try: 
-            instantImagePath = filechooser.open_file(title="Pick an image file...", filters = [("*.png","*.jpg")])[0]
+            instantImagePath = filechooser.open_file(title="Pick an image file...", filters = [("*.png")])[0]
             self.root.ids.my_image.source = instantImagePath # Try clause since if they click on a directory or any non-image, it won't error out
             self.root.ids.InstantID.selectedImage = instantImagePath
             #print(instantImagePath + "\\test\\another\\directory\\")
@@ -77,10 +77,10 @@ class Test(MDApp):
         self.title = "Faceify"
         self.theme_cls.primary_palette = "BlueGray"
         self.theme_cls.accent_palette = "Blue"
-        if hasattr(sys, '_MEIPASS'):
+        if hasattr(sys, '_MEIPASS'): # if it's in EXE form
             return Builder.load_file(sys._MEIPASS + '\\new_kiv.kv')
         
-        return Builder.load_file('new_kiv.kv')
+        return Builder.load_file('new_kiv.kv') # if you're just using python new_kiv.ky
 if __name__ == "__main__":
     # these lines should be added
     if hasattr(sys, '_MEIPASS'):

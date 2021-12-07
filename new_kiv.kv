@@ -156,8 +156,7 @@ MDBoxLayout:
                             font_size: 16
                             on_release:
                                 app.chooseImage()
-                                #my_image.source = selectedImage
-                                #selectedImage = my_image.source
+                                
                         Button:
                             text: "Choose working directory"
                             font_size: 16
@@ -167,16 +166,16 @@ MDBoxLayout:
                                 #selectedImage = my_image.source
 
                         #FileChooserListView:
-                         #   canvas.before:
-                          #      Color:
-                           #         rgb: 0, 0, 0
-                            #    Rectangle:
-                             #       size: self.size
-                           # id: filechooser
-                            #path: ""
-                           # on_selection: 
-                            #    app.select_image(filechooser.selection)
-                                # my_image.source = filechooser.selection[0]
+                        #    canvas.before:
+                        #        Color:
+                        #            rgb: 0, 0, 0
+                        #        Rectangle:
+                        #            size: self.size
+                        #    id: filechooser
+                        #    #path: ""
+                        #    on_selection: 
+                        #        app.select_image(filechooser.selection)
+                        #        my_image.source = filechooser.selection[0]
                 BoxLayout:
                     orientation: "horizontal"
 

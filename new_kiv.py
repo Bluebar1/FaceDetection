@@ -1,6 +1,6 @@
 from kivymd.app import MDApp
 from kivy.lang import Builder
-
+from plyer import filechooser
 
 from modes.live import runLive
 from modes.instant import runInstant
@@ -9,19 +9,40 @@ from modes.offline import runOffline
 import os
 import config
 
+
 class Test(MDApp):    
+    workingFolder = ""
     instantImagePath = ""
+    
     
     def runLive(self, alg) :
         runLive(alg)
 
     def runInstant(self, args) :
-        if((args[0] != "") & (args[1] != "")):
+        if((args[0] != "") & (args[1] != "") & (args[2] != "")):
+            #print("Calling run instant")
             runInstant(self, args)
     
     def runOffline(self, args):
         if((args[0] != "") & (args[1] != "")):
             runOffline(self, args)
+
+    def setWorkingFolder(self) :
+        try: 
+            workingFolder = filechooser.choose_dir(title="Choose the output directory...")[0]
+            self.root.ids.InstantID.outputFolder = workingFolder
+            #print(instantImagePath + "\\test\\another\\directory\\")
+        except:
+            pass
+
+    def chooseImage(self) :
+        try: 
+            instantImagePath = filechooser.open_file(title="Pick an image file...", filters = [("*.png","*.jpg")])[0]
+            self.root.ids.my_image.source = instantImagePath # Try clause since if they click on a directory or any non-image, it won't error out
+            self.root.ids.InstantID.selectedImage = instantImagePath
+            #print(instantImagePath + "\\test\\another\\directory\\")
+        except:
+            pass
     
     def select_image(self, file) :
         try: 
@@ -34,7 +55,7 @@ class Test(MDApp):
     def updateInstantResults(self, runTime, facesDetected, resultPicture):
         self.root.ids.instantRunTime.text = "Run Time: " + str(runTime) + "ms"
         self.root.ids.instantFaceCounted.text = "Faces Detected: " + str(facesDetected)
-        self.root.ids.instantOuputJSONFilePath.text = "Output Data Folder: " + os.path.dirname(os.path.abspath(config.instantDataLocation))
+        self.root.ids.instantOuputJSONFilePath.text = "Output Data Folder: " + self.root.ids.InstantID.outputFolder + config.instantDataLocation
         self.root.ids.my_image.source = resultPicture
         self.root.ids.my_image.reload()
         

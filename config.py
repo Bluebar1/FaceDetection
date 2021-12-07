@@ -1,14 +1,14 @@
 # Global Variables
 
 
-inputPath = 'data/images/input'
-outputPath = 'data/images/output'
-instantDataLocation = 'data/results/instant.json'
-offlineDataLocation = 'data/results/offline.json'
-instantImageOutput = 'data/images/output/instant_result.jpg'
-liveImg = 'data/images/output/liveframe.jpg'
-offlineOutputPath = 'data/images/output/offline'
-offlineLatexLocation = 'data/results/latex.txt'
-retinaTempSaveLocation = outputPath + '/retina.jpg'
-markingsLoc = 'data/images/input/markings/'
+inputPath = '\\images\\input'
+outputPath = '\\images\\output'
+instantDataLocation = '\\results\\instant.json'
+offlineDataLocation = '\\results\\offline.json'
+instantImageOutput = '\\images\\output\\instant_result.jpg'
+liveImg = '\\images\\output\\liveframe.jpg'
+offlineOutputPath = '\\images\\output\\offline'
+offlineLatexLocation = '\\results\\latex.txt'
+retinaTempSaveLocation = outputPath + '\\retina.jpg'
+markingsLoc = '\\images\\input\\markings\\'
 

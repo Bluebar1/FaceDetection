@@ -86,6 +86,7 @@ MDBoxLayout:
             
 			selectedAlgorithm: ""
 			selectedImage: ""
+            outputFolder: ""
 			
             # canvas:
             #     Color:
@@ -150,16 +151,31 @@ MDBoxLayout:
                             text: "Select a file below"
                             font_size: 16
                             size_hint: (1,.3)
-                        FileChooserListView:
-                            canvas.before:
-                                Color:
-                                    rgb: 0, 0, 0
-                                Rectangle:
-                                    size: self.size
-                            id: filechooser
+                        Button:
+                            text: "Choose image"
+                            font_size: 16
+                            on_release:
+                                app.chooseImage()
+                                #my_image.source = selectedImage
+                                #selectedImage = my_image.source
+                        Button:
+                            text: "Choose working directory"
+                            font_size: 16
+                            on_release:
+                                app.setWorkingFolder()
+                                #my_image.source = selectedImage
+                                #selectedImage = my_image.source
+
+                        #FileChooserListView:
+                         #   canvas.before:
+                          #      Color:
+                           #         rgb: 0, 0, 0
+                            #    Rectangle:
+                             #       size: self.size
+                           # id: filechooser
                             #path: ""
-                            on_selection: 
-                                app.select_image(filechooser.selection)
+                           # on_selection: 
+                            #    app.select_image(filechooser.selection)
                                 # my_image.source = filechooser.selection[0]
                 BoxLayout:
                     orientation: "horizontal"
@@ -206,7 +222,7 @@ MDBoxLayout:
 							font_size: 32
 							size_hint: (1,.25)
                             background_color: (43/255,179/255,17/255,1)
-							on_release: app.runInstant([InstantID.selectedAlgorithm, InstantID.selectedImage])
+							on_release: app.runInstant([InstantID.selectedAlgorithm, InstantID.selectedImage, InstantID.outputFolder])
 
 
                     

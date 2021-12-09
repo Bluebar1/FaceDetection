@@ -10,7 +10,7 @@ Arguments:
 
 import config
 import utils
-import os
+import os, sys
 import cv2
 import json
 
@@ -34,7 +34,7 @@ def runOffline(callingScript, args):
     offlineOutputPath = workingFolder + config.offlineOutputPath
     offlineDataLocation = workingFolder + '\\results\\offline.json'
     offlineLatexLocation = workingFolder + '\\results\\latex.txt'
-
+    #print("Reached 1")
     os.makedirs(offlineOutputPath, exist_ok=True)
     os.makedirs(workingFolder + '\\results\\', exist_ok=True)
 
@@ -50,7 +50,7 @@ def runOffline(callingScript, args):
     markPath = dataset + '/' + markName + '.json' #JSON file must be inside the dataset folder if mark name is included.
 
     isTrained = False
-
+    #print("Reached 2")
     if markName != "":
         isTrained = True
         data = utils.loadJSON(markPath)
@@ -66,14 +66,14 @@ def runOffline(callingScript, args):
     facesDetected = 0
     totalRuntime = 0
     totalImagesChecked = 0 #Counted instead of getting length of list since some files may have a invaild file type
-    
+    #print("Reached 3")
     if isTrained :
         totalFalseDetections = 0
         totalAccuracy = 0
     else:
         totalFalseDetections = 'na'
         totalAccuracy = 'na'
-    
+    #print("Reached 4")
     # Gets list paths to images in selected dataset
     images = os.listdir(path)
     
@@ -85,12 +85,16 @@ def runOffline(callingScript, args):
     if algorithm == 'mtcnn' :
         det = MTCNN()
     elif algorithm == 'haar' :
-        det = cv2.CascadeClassifier(cv2.data.haarcascades + "haarcascade_frontalface_default.xml")
+        if hasattr(sys, '_MEIPASS'): # if it's in EXE form
+            det = cv2.CascadeClassifier(sys._MEIPASS + '\\haarcascade_frontalface_default.xml')
+        else : 
+            det = cv2.CascadeClassifier(cv2.data.haarcascades + "haarcascade_frontalface_default.xml")
     elif algorithm == 'retina' :
         model = RetinaFace.build_model()
-
+    #print("Reached 5")
 
     for filename in tqdm(images) :
+        print("Still in 5")
         if (filename[-3:] == "png") | (filename[-3:] == "jpg"): #Accepted file types
           currentScanProgress = (totalImagesChecked+1) / totalNumberOfFiles
           callingScript.updateOfflineProgress(currentScanProgress, filename)
@@ -146,6 +150,7 @@ def runOffline(callingScript, args):
           jsonpath = base / ('offline.json')
           jsonpath.write_text(json.dumps(data))
           utils.appendJSON(offlineDataLocation, result)
+    #print("Reached 6")
     if (totalImagesChecked < 1) :
         return
     avgFaces = (facesDetected / totalImagesChecked)
@@ -157,9 +162,9 @@ def runOffline(callingScript, args):
     else:
         avgFalseDetections = 'na'
         avgAccuracy = 'na'
-    
+    #print("Reached 7")
     callingScript.updateOfflineResults(totalRuntime,avgRuntime,facesDetected,avgFaces)
-
+    #print("Reached 8")
     # Writing test result in latex format to txt file
     f = open(offlineLatexLocation, 'w+')
     table = [algorithm, str(totalRuntime), str(avgRuntime), str(facesDetected), str(avgAccuracy), str(avgFalseDetections)]

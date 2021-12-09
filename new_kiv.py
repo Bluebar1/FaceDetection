@@ -20,10 +20,14 @@ class Test(MDApp):
     offlineFolder = ""
 
     def openLeTeXFolder(self) :
+        os.makedirs(self.workingFolder + '\\results', exist_ok=True)
+
         path = os.path.realpath(self.workingFolder + '\\results')
         os.startfile(path)
 
     def openOfflineOutputFolder(self) :
+        os.makedirs(self.workingFolder + config.offlineOutputPath, exist_ok=True)
+
         path = os.path.realpath(self.workingFolder + config.offlineOutputPath)
         os.startfile(path)
     

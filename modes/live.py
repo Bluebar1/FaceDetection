@@ -13,7 +13,7 @@ import numpy as np
 import utils
 import config
 import time
-import os
+import os, sys
 
 
 def liveMTCNN() :
@@ -54,7 +54,10 @@ def liveMTCNN() :
 
 def liveHaar() :
     print('Running live. Click on video window and press Q to quit')
-    face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + "haarcascade_frontalface_default.xml")
+    if hasattr(sys, '_MEIPASS'): # if it's in EXE form
+        face_cascade = cv2.CascadeClassifier(sys._MEIPASS + '\\haarcascade_frontalface_default.xml')
+    else : 
+        face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + "haarcascade_frontalface_default.xml")
     cap = cv2.VideoCapture()
     cap.open(0, cv2.CAP_DSHOW)
 

@@ -109,7 +109,7 @@ def runOffline(callingScript, args):
           if isTrained :
               marks = data[i]
               i+=1
-              isSuccess = runTest(result, marks, filename)
+              isSuccess = runTest(result, marks, filename, workingFolder)
           else : 
               isSuccess = 'na'
 
@@ -190,7 +190,7 @@ def delPreviousResults(offlineOutputPath, offlineDataLocation) :
     for filename in os.listdir(offlineOutputPath) :
         os.remove(offlineOutputPath + '/' + filename)
 
-def runTest(result, data, filename) :
+def runTest(result, data, filename, workingFolder) :
     faces = result.get_faces()
     img = result.get_img()
 
@@ -219,7 +219,7 @@ def runTest(result, data, filename) :
     
     # save image file if any false detections
     if falseDetections !=0 :
-        cv2.imwrite(offlineOutputPath + '/' + filename, result.get_img())
+        cv2.imwrite(workingFolder + '/' + filename, result.get_img())
 
     ##TODO: Also save image file if accuracy not 1
     if successCount == len(data) :

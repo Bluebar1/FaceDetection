@@ -33,7 +33,7 @@ class myThread (threading.Thread):
     def run(self):
         args = self.args
         callingScript = self.callingScript
-        #callingScript.updateOfflineProgress(0, "")
+        callingScript.updateOfflineProgress(0, "")
         callingScript.root.ids.offlineRunTime.text = "Run Time:"
         callingScript.root.ids.offlineAvgRunTime.text = "Avg. Run Time:"
         callingScript.root.ids.offlineFaceCounted.text = "Faces Detected:"

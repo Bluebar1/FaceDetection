@@ -1,5 +1,6 @@
 # FaceDetection
-ICSI499 Capstone Project  
+ICSI499 Capstone Project 
+EXE available here: https://drive.google.com/file/d/1FKQ22HFSkQbqtpIjtdtiPQXaXb3lKtal/view?usp=sharing
  
 ## First Time Setup
 Make sure python version <= 3.9  

@@ -33,6 +33,12 @@ class myThread (threading.Thread):
     def run(self):
         args = self.args
         callingScript = self.callingScript
+        #callingScript.updateOfflineProgress(0, "")
+        callingScript.root.ids.offlineRunTime.text = "Run Time:"
+        callingScript.root.ids.offlineAvgRunTime.text = "Avg. Run Time:"
+        callingScript.root.ids.offlineFaceCounted.text = "Faces Detected:"
+        callingScript.root.ids.offlineAvgFaceCounted.text = "Avg. Faces Detected:"
+
         algorithm = args[0]
         dataset = args[1] 
         print("Dataset is: " + dataset) 
@@ -103,9 +109,9 @@ class myThread (threading.Thread):
             print("Processing next image")
             if (filename[-3:] == "png") | (filename[-3:] == "jpg"): #Accepted file types
                 currentScanProgress = (totalImagesChecked+1) / totalNumberOfFiles
-                #callingScript.updateOfflineProgress(currentScanProgress, filename)
-                callingScript.root.ids.offlineModeCurrentProgress.value = currentScanProgress
-                callingScript.root.ids.offlineModeCurrentFile.text = filename
+                callingScript.updateOfflineProgress(currentScanProgress, filename)
+                #callingScript.root.ids.offlineModeCurrentProgress.value = currentScanProgress
+                #callingScript.root.ids.offlineModeCurrentFile.text = filename
                 tic = utils.currentTime()
 
                 if algorithm == 'mtcnn' :

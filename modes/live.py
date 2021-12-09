@@ -137,8 +137,8 @@ def runLive(args, o) :
     algorithm = args
     outputFolder = o
     if algorithm == 'mtcnn' :
-        liveMTCNN(outputFolder)
+        liveMTCNN()
     elif algorithm == 'haar' :
-        liveHaar(outputFolder)
+        liveHaar()
     elif algorithm == 'retina' :
         liveRetina(outputFolder)

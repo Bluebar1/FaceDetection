@@ -14,36 +14,45 @@ from PIL import Image
 
 
 class Test(MDApp):    
-    workingFolder = ""
+    workingFolder = os.path.expanduser('~/Documents') + "\\Faceify"
+    os.makedirs(workingFolder, exist_ok=True)
     instantImagePath = ""
-    
-    
-    def runLive(self, alg, outputFolder) :
-        runLive(alg,outputFolder)
+    offlineFolder = ""
 
-    def runInstant(self, args) :
-        if((args[0] != "") & (args[1] != "") & (args[2] != "")):
-            #print("Calling run instant")
-            runInstant(self, args)
-    
-    def runOffline(self, args):
-        if((args[0] != "") & (args[1] != "")):
-            runOffline(self, args)
+    def openLeTeXFolder(self) :
+        path = os.path.realpath(self.workingFolder + '\\results')
+        os.startfile(path)
 
-    def setWorkingFolder(self) :
+    def openOfflineOutputFolder(self) :
+        path = os.path.realpath(self.workingFolder + config.offlineOutputPath)
+        os.startfile(path)
+    
+    def setOfflineFolder(self) :
         try: 
-            workingFolder = filechooser.choose_dir(title="Choose the output directory...")[0]
-            self.root.ids.InstantID.outputFolder = workingFolder
-            self.root.ids.Live.outputFolder = workingFolder
+            self.offlineFolder = filechooser.choose_dir(title="Choose the source folder...")[0]
+            self.root.ids.folder_path_label.text = "Chosen Folder: " + self.offlineFolder
             #print(instantImagePath + "\\test\\another\\directory\\")
         except:
             pass
 
+    def runLive(self, alg) :
+        runLive(alg,self.workingFolder)
+
+    def runInstant(self, args) :
+        if((args[0] != "") & (args[1] != "")):
+            #print("Calling run instant")
+            runInstant(self, [args[0], args[1], self.workingFolder])
+    
+    def runOffline(self, args):
+        if((args[0] != "") & (args[1] != "") & (self.offlineFolder != "")):
+            runOffline(self, [args[0], self.offlineFolder, args[1], args[2], self.workingFolder])
+
     def chooseImage(self) :
         try: 
-            instantImagePath = filechooser.open_file(title="Pick an image file...", filters = [("*.png"), ("*.jpg"), ("*.jpeg")])[0]
+            instantImagePath = filechooser.open_file(title="Pick an image file...", filters = [("Images", '*.png','*.jpg','*.jpeg')])[0]
             self.root.ids.my_image.source = instantImagePath # Try clause since if they click on a directory or any non-image, it won't error out
             self.root.ids.InstantID.selectedImage = instantImagePath
+            self.root.ids.instant_file_location_label.text = "Image Location: " + instantImagePath
             #print(instantImagePath + "\\test\\another\\directory\\")
         except:
             pass
@@ -59,7 +68,7 @@ class Test(MDApp):
     def updateInstantResults(self, runTime, facesDetected, resultPicture):
         self.root.ids.instantRunTime.text = "Run Time: " + str(runTime) + "ms"
         self.root.ids.instantFaceCounted.text = "Faces Detected: " + str(facesDetected)
-        self.root.ids.instantOuputJSONFilePath.text = "Output Data Folder: " + self.root.ids.InstantID.outputFolder + config.instantDataLocation
+        self.root.ids.instantOuputJSONFilePath.text = "Output Data Folder: " + self.workingFolder + config.instantDataLocation
         self.root.ids.my_image.source = resultPicture
         self.root.ids.my_image.reload()
         
@@ -72,7 +81,7 @@ class Test(MDApp):
         self.root.ids.offlineAvgRunTime.text = "Avg. Run Time: " + str(avgRunTime) + "ms"
         self.root.ids.offlineFaceCounted.text = "Faces Detected: " + str(facesDetected)
         self.root.ids.offlineAvgFaceCounted.text = "Avg. Faces Detected: " + str(avgFacesDetected)
-        self.root.ids.saved_folder_path.outputLatexFilePath = os.path.dirname(os.path.abspath(config.offlineLatexLocation))
+        self.root.ids.saved_folder_path.outputLatexFilePath = self.workingFolder + config.offlineLatexLocation
     
     def build(self):
         self.icon = "logo.png"

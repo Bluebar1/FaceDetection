@@ -22,7 +22,6 @@ MDBoxLayout:
             name: "Live"
             id: Live
             text: self.name
-            outputFolder: ""
             #on_tab_release: toolbar.title = self.name
             
             BoxLayout:
@@ -45,14 +44,6 @@ MDBoxLayout:
                     text: "Select an algorithm to run in Live mode"
                     halign: "center"
 
-                Button:
-                    text: "Choose working directory"
-                    font_size: 16
-                    on_release:
-                        app.setWorkingFolder()
-                        #my_image.source = selectedImage
-                        #selectedImage = my_image.source
-                        
                 Button:
                     text: 'mtcnn'
                     size_hint: 0.3, 0.2
@@ -79,7 +70,7 @@ MDBoxLayout:
                     # height: 44
                     # width: 100
                     # pos_hint: {"center_x": .5, "center_y": .5}
-                    on_release: app.runLive(self.text, Live.outputFolder) 
+                    on_release: app.runLive(self.text) 
                     background_color: (96/255,125/255,139/255)
                 MDLabel:
                     size_hint: 0.3,0.2
@@ -96,7 +87,6 @@ MDBoxLayout:
             
 			selectedAlgorithm: ""
 			selectedImage: ""
-            outputFolder: ""
 			
             # canvas:
             #     Color:
@@ -161,19 +151,19 @@ MDBoxLayout:
                             text: "Select a file below"
                             font_size: 16
                             size_hint: (1,.3)
+                        Label:
+                            id: instant_file_location_label
+                            text: "Image Location:"
+                            font_size: 16
+                            size_hint: (1,.3)
                         Button:
                             text: "Choose image"
                             font_size: 16
+                            background_color: (96/255,125/255,139/255)
                             on_release:
                                 app.chooseImage()
+                        
                                 
-                        Button:
-                            text: "Choose working directory"
-                            font_size: 16
-                            on_release:
-                                app.setWorkingFolder()
-                                #my_image.source = selectedImage
-                                #selectedImage = my_image.source
 
                         #FileChooserListView:
                         #    canvas.before:
@@ -231,7 +221,7 @@ MDBoxLayout:
 							font_size: 32
 							size_hint: (1,.25)
                             background_color: (43/255,179/255,17/255,1)
-							on_release: app.runInstant([InstantID.selectedAlgorithm, InstantID.selectedImage, InstantID.outputFolder])
+							on_release: app.runInstant([InstantID.selectedAlgorithm, InstantID.selectedImage])
 
 
                     
@@ -351,17 +341,16 @@ MDBoxLayout:
                             text: "Select a folder below"
                             font_size: 16
                             size_hint: (1,.3)
-                        FileChooserListView:
-                            canvas.before:
-                                Color:
-                                    rgb: 0, 0, 0
-                                Rectangle:
-                                    size: self.size
-                            id: folderchooser
-                            #path: ""
-                            dirselect: True
-							filters: [lambda folder, filename: not filename.endswith('')]
-                            on_selection: folder_path_label.text = "Chosen Folder: " + folderchooser.selection[0]
+                        
+                        Button:
+                            text: "Select a folder"
+                            font_size: 16
+                            background_color: (96/255,125/255,139/255)
+                            on_release:
+                                app.setOfflineFolder()
+                                #my_image.source = selectedImage
+                                #selectedImage = my_image.source
+                        
 				
 				BoxLayout:
                     orientation: "horizontal"
@@ -396,13 +385,20 @@ MDBoxLayout:
 								
 						Button:
 							id: saved_folder_path
-							outputLatexFilePath: ""
-							text: "Copy output LeTeX Folder to Clipboard"
+							text: "Open LeTeX Output Folder"
                             background_color: (210/255,224/255,16/255)
 							text_size: self.width, None
 							size_hint: (1,0.2)
 							halign: 'center'
-							on_release: Clipboard.copy(saved_folder_path.outputLatexFilePath)
+							on_release: app.openLeTeXFolder()
+                        Button:
+							id: saved_folder_path
+							text: "Open Images Output Folder"
+                            background_color: (210/255,224/255,16/255)
+							text_size: self.width, None
+							size_hint: (1,0.2)
+							halign: 'center'
+							on_release: app.openOfflineOutputFolder()
 
                     BoxLayout:						
                         orientation: "vertical"
@@ -454,4 +450,4 @@ MDBoxLayout:
                             font_size: 32
                             size_hint: (1,.3)
                             background_color: (43/255,179/255,17/255,1)
-                            on_release: app.runOffline([OfflineID.selectedAlgorithm, folderchooser.selection[0], pictureLimitInput.text, markingNameInput.text])
+                            on_release: app.runOffline([OfflineID.selectedAlgorithm, pictureLimitInput.text, markingNameInput.text])

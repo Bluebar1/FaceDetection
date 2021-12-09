@@ -12,10 +12,12 @@ import config
 import utils
 import os
 import cv2
+import json
 
 from tqdm import tqdm
 from mtcnn_cv2 import MTCNN
 from retinaface import RetinaFace
+from pathlib import Path
 
 
 from algorithms import mtcnn
@@ -26,8 +28,16 @@ def runOffline(callingScript, args):
     print('Running Offline Mode')
     print('...')
     algorithm = args[0]
-    dataset = args[1]  
-    
+    dataset = args[1] 
+    print("Dataset is: " + dataset) 
+    workingFolder = args[4]
+    offlineOutputPath = workingFolder + config.offlineOutputPath
+    offlineDataLocation = workingFolder + '\\results\\offline.json'
+    offlineLatexLocation = workingFolder + '\\results\\latex.txt'
+
+    os.makedirs(offlineOutputPath, exist_ok=True)
+    os.makedirs(workingFolder + '\\results\\', exist_ok=True)
+
     if args[2] == '':
         limit = 0
     else:
@@ -51,7 +61,7 @@ def runOffline(callingScript, args):
     # else :
     #     data = []
 
-    delPreviousResults()
+    delPreviousResults(offlineOutputPath, offlineDataLocation)
 
     facesDetected = 0
     totalRuntime = 0
@@ -104,7 +114,7 @@ def runOffline(callingScript, args):
               isSuccess = 'na'
 
           result.setAny(
-              resultSaveLoc=config.offlineOutputPath,
+              resultSaveLoc=offlineOutputPath,
               algorithm=algorithm,
               dateTime=utils.dateTime(),
               runTime=round(toc-tic, 0),
@@ -116,10 +126,10 @@ def runOffline(callingScript, args):
           totalRuntime += result.get_runTime()
           
           # Save new image file
-          cv2.imwrite(config.offlineOutputPath + '/' + filename, result.get_img())
+          cv2.imwrite(offlineOutputPath + '/' + filename, result.get_img())
 
           result.setAny(
-              resultSaveLoc=config.offlineOutputPath,
+              resultSaveLoc=offlineOutputPath,
               algorithm=algorithm,
               dateTime=utils.dateTime(),
               runTime=round(toc-tic, 0),
@@ -131,8 +141,13 @@ def runOffline(callingScript, args):
             totalAccuracy += result.get_accuracy()
           
           result.set_img(f'{filename}')
-          utils.appendJSON(config.offlineDataLocation, result)
-    
+          base = Path(workingFolder + '\\results')
+          data = []
+          jsonpath = base / ('offline.json')
+          jsonpath.write_text(json.dumps(data))
+          utils.appendJSON(offlineDataLocation, result)
+    if (totalImagesChecked < 1) :
+        return
     avgFaces = (facesDetected / totalImagesChecked)
     avgRuntime = (totalRuntime / totalImagesChecked)
 
@@ -146,7 +161,7 @@ def runOffline(callingScript, args):
     callingScript.updateOfflineResults(totalRuntime,avgRuntime,facesDetected,avgFaces)
 
     # Writing test result in latex format to txt file
-    f = open(config.offlineLatexLocation, 'w+')
+    f = open(offlineLatexLocation, 'w+')
     table = [algorithm, str(totalRuntime), str(avgRuntime), str(facesDetected), str(avgAccuracy), str(avgFalseDetections)]
     
     
@@ -164,16 +179,16 @@ def runOffline(callingScript, args):
     print('Faces Detected: ' + str(facesDetected))
     print('Average Accuracy: ' + str(avgAccuracy))
     print('Total False Detections: ' + str(totalFalseDetections))
-    print('Marked images saved to ' + config.offlineOutputPath)
-    print('JSON test results data saved to ' + config.offlineDataLocation)
+    print('Marked images saved to ' + offlineOutputPath)
+    print('JSON test results data saved to ' + offlineDataLocation)
 
-def delPreviousResults() :
-    f = open(config.offlineDataLocation, 'w+')
+def delPreviousResults(offlineOutputPath, offlineDataLocation) :
+    f = open(offlineDataLocation, 'w+')
     f.write('[]')
     f.close()
 
-    for filename in os.listdir(config.offlineOutputPath) :
-        os.remove(config.offlineOutputPath + '/' + filename)
+    for filename in os.listdir(offlineOutputPath) :
+        os.remove(offlineOutputPath + '/' + filename)
 
 def runTest(result, data, filename) :
     faces = result.get_faces()
@@ -204,7 +219,7 @@ def runTest(result, data, filename) :
     
     # save image file if any false detections
     if falseDetections !=0 :
-        cv2.imwrite(config.offlineOutputPath + '/' + filename, result.get_img())
+        cv2.imwrite(offlineOutputPath + '/' + filename, result.get_img())
 
     ##TODO: Also save image file if accuracy not 1
     if successCount == len(data) :

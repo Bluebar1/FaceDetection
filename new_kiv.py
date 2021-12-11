@@ -53,7 +53,7 @@ class Test(MDApp):
 
     def chooseImage(self) :
         try: 
-            instantImagePath = filechooser.open_file(title="Pick an image file...", filters = [("Images", '*.png','*.jpg','*.jpeg')])[0]
+            instantImagePath = filechooser.open_file(title="Pick an image file...", filters = [("Images", '*.png','*.jpg')])[0]
             self.root.ids.my_image.source = instantImagePath # Try clause since if they click on a directory or any non-image, it won't error out
             self.root.ids.InstantID.selectedImage = instantImagePath
             self.root.ids.instant_file_location_label.text = "Image Location: " + instantImagePath
